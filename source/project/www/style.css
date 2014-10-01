@@ -1,0 +1,31 @@
+@import url('components/timer/style.css');
+@import url('components/sound/style.css');
+@import url('components/info/style.css');
+@import url('components/member/style.css');
+@import url('components/top/style.css');
+@import url('components/team/style.css');
+@import url('components/load/style.css');
+@import url('components/intro/style.css');
+@import url('components/choice/style.css');
+@import url('components/match/style.css');
+@import url('components/result/style.css');
+@import url('components/instruction/style.css');
+@import url('components/tournament/style.css');
+@import url('components/game/style.css');
+@import url('components/scores/style.css');
+
+@import url('css/buttons.css');
+@import url('css/button.css');
+
+body {
+    font-family: 'Roboto Condensed', sans-serif;
+}
+
+#container {
+    position: absolute;
+    z-index: 5;
+    left: 0;
+    top: 0;
+    width: 700px;
+    height: 800px;
+}

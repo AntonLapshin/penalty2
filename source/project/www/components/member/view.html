@@ -1,0 +1,8 @@
+<li class="member" data-bind="click: onClick, event: { mouseover: function() { hover($data); }, mouseout: out }">
+    <!-- ko if: player -->
+    <img class="ava" src="" data-bind="attr: { src: player().img, title: player().name }" />
+    <img alt="star" src="components/member/star.png" class="star" data-bind="visible: player().place < 3" style="right: 0"/>
+    <img alt="star" src="components/member/star.png" class="star" data-bind="visible: player().place < 2" style="right: 16px"/>
+    <img alt="star" src="components/member/star.png" class="star" data-bind="visible: player().place < 1" style="right: 32px"/>
+    <!-- /ko -->
+</li>

@@ -1,0 +1,15 @@
+<div class="team">
+    <!-- ko if: model -->
+
+    <!-- ko if: position == 'left' -->
+    <div data-bind="css: model().className"></div>
+    <span data-bind="text: model().name, css: { 'playerTeam': model().isPlayer }"></span>
+    <!-- /ko -->
+
+    <!-- ko if: position == 'right' -->
+    <span data-bind="text: model().name, css: { 'playerTeam': model().isPlayer }"></span>
+    <div data-bind="css: model().className"></div>
+    <!-- /ko -->
+
+    <!-- /ko -->
+</div>

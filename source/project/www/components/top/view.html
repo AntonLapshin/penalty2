@@ -1,0 +1,7 @@
+<div class="top" data-bind="visible: isVisible() && isLoaded()">
+    <ul data-bind="foreach: players">
+        <member params="value: $data"></member>
+    </ul>
+    <a class="push_button blue small" data-bind="click: toFriendsTop">Рейтинг друзей</a>
+    <a class="push_button red small" data-bind="click: toAllTop">Общий рейтинг</a>
+</div>
