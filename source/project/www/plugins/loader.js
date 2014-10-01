@@ -1,4 +1,4 @@
-define(['model/resources', 'lodash'], function (resources) {
+define(['model/resources', 'lodash', 'howler'], function (resources) {
 
     var TIMEOUT = 2000;
 
@@ -31,16 +31,15 @@ define(['model/resources', 'lodash'], function (resources) {
         });
     }
 
-    function loadSound(sound) {
+    function loadSound(file) {
         return $.Deferred(function (defer) {
-            sound.audio$ = $('<audio />')
-                .on('canplay', defer.resolve)
-                .attr({
-                    'src': require.toUrl(sound.src),
-                    'loop': sound.loop === true
-                });
+            file.audio = new Howl({
+                urls: [require.toUrl(file.src)],
+                loop: file.loop,
+                onload: defer.resolve
+            });
 
-            if (!sound.required)
+            if (!file.required)
                 setTimeout(defer.resolve, TIMEOUT);
         });
     }
@@ -69,7 +68,7 @@ define(['model/resources', 'lodash'], function (resources) {
             var files = [];
             for (var stage in resources) {
                 if (!resources.hasOwnProperty(stage))continue;
-                files.concat(resources[stage]);
+                files = files.concat(resources[stage]);
             }
             return files;
         },

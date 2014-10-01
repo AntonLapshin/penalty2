@@ -30,7 +30,14 @@ define(['ko', 'text!./view.html', 'plugins/audio'], function(ko, html, audio) {
         },
 
         test: function(){
-            this.show();
+            var self = this;
+            require(['plugins/loader'], function(loader){
+                loader.load(loader.resources.ENGINE)
+                    .then(function () {
+                        self.show();
+                        audio.play('stadium');
+                    })
+            });
         }
     };
 

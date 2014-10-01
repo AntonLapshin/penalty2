@@ -61,6 +61,7 @@ define(function () {
                 name: 'stadium',
                 src: 'engine/mp3/stadium.mp3',
                 loop: true,
+                duration: 7,
                 required: true
             },
             {
