@@ -5,8 +5,11 @@ api_version: 1
 
 handlers:
   
-- url: /resources
-  static_dir: resources
+- url: /components
+  static_dir: components
+
+- url: /engine
+  static_dir: engine
 
 - url: /
   static_files: index.html
