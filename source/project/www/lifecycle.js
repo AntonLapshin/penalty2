@@ -104,7 +104,12 @@ define(function () {
                                             function () {
                                                 top.viewModel().isVisible(true);
                                                 top.viewModel().sort();
-                                                result.viewModel().show();
+                                                result.viewModel().show(
+                                                    score,
+                                                    place,
+                                                    options.teams[_playerTeamIndex],
+                                                    options.goals
+                                                );
                                             }
                                         );
                                         return;
