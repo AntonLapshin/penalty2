@@ -67,7 +67,7 @@ require([
             //match.viewModel().test();
             //result.viewModel().test();
             //scores.viewModel().test();
-            game.viewModel().test();
+            //game.viewModel().test();
         });
     });
 

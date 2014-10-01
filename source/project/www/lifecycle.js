@@ -94,16 +94,17 @@ define(function () {
                                 })
                                 .progress(function (type, args) {
                                     if (type === 'end') {
+                                        var place = args;
                                         options.upgrade();
-                                        var score = (17 - options.place) * 1000 + options.goals * 10 + options.player.exp * 15 + options.player.goals;
+                                        var score = (17 - place) * 1000 + options.goals * 10 + options.player.exp * 15 + options.player.goals;
                                         if (score > options.player.score)
                                             options.player.score = score;
                                         //options.save();
-                                        vk.wallPost('photo-71627954_332801553', format(MESSAGE, options.place, APP_URL)).then(
+                                        vk.wallPost('photo-71627954_332801553', format(MESSAGE, place, APP_URL)).then(
                                             function () {
                                                 top.viewModel().isVisible(true);
-                                                top.viewModel.sort();
-                                                result.viewModel.show();
+                                                top.viewModel().sort();
+                                                result.viewModel().show();
                                             }
                                         );
                                         return;
@@ -116,7 +117,7 @@ define(function () {
                                                 loader.load(loader.resources.ENGINE, function(percent) {
                                                     load.viewModel().onPercentChanged(percent);
                                                 }),
-                                                load.viewModel().show('Start Game')
+                                                load.viewModel().show('Начать игру')
                                             ]);
                                         })
                                         .then(function () {
@@ -131,10 +132,13 @@ define(function () {
                                             );
                                         })
                                         .then(function(goalsA, goalsB){
+                                            args.goalsA = goalsA;
+                                            args.goalsB = goalsB;
                                             if (_playerTeamAB == 'A'){
                                                 options.goals += goalsA;
                                                 options.miss += goalsB;
                                             }
+                                            tournament.viewModel().matchEnded(args)
                                         })
                                 })
                         })

@@ -111,7 +111,7 @@ define(['ko', 'text!./view.html'], function(ko, html) {
 
         matchEnded: function(match){
             this.isVisible(true);
-            setWinner(match.pair, match.goals1, match.goals2);
+            setWinner(match.pair, match.goalsA, match.goalsB);
             this.setNewTeamPairs();
             if (match.pair.winner !== _playerTeamIndex) {
                 var place;

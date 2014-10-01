@@ -54,6 +54,9 @@ define(['ko', 'text!./view.html', 'engine/game', 'components/scores/vm'], functi
             }
 
             function result(isGoal) {
+                self.isVisible(false);
+                _defer.resolve(1, 0);
+                return;
                 var text = scores.viewModel().next(isGoal);
 
                 if (!text){

@@ -36,6 +36,8 @@ define(['ko', 'text!./view.html'], function (ko, html) {
             _moveTeamAB = firstTeamAB;
             _step = 1;
 
+            this.rounds = ko.observableArray([]);
+
             this.isVisible(true);
             this.teamA(teamA);
             this.teamB(teamB);

@@ -41,7 +41,7 @@ define([
 
             stop: function (delay) {
                 setTimeout(function () {
-                    audio.stop();
+                    audio.mute();
                     Physics.util.ticker.stop();
                 }, delay);
             },
@@ -59,7 +59,7 @@ define([
                             objects.init(world);
                             arrow.init(world);
                             //camera.init(world, WIDTH, HEIGHT, 2512, 2250);
-                            bullet.init(world);
+                            //bullet.init(world);
                             collisions.init(world);
 
                             world.on('arrow:ready', function () {
