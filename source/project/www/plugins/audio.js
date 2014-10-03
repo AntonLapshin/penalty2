@@ -1,15 +1,10 @@
-define(['jquery', 'plugins/loader', 'lodash', 'howler'], function ($, loader) {
+define(['jquery', 'plugins/loader', 'howler'], function ($, loader) {
 
-    var VOLUME = 0.5,
-        _enabled = true;
+    var VOLUME = 0.5;
 
     return {
 
         play: function (name) {
-            if (!_enabled) return;
-            if (Howler._muted)
-                this.unmute();
-
             var file = loader.getFile(name);
             if (!(file && file.audio))
                 return;
@@ -18,8 +13,16 @@ define(['jquery', 'plugins/loader', 'lodash', 'howler'], function ($, loader) {
             file.audio.play();
         },
 
-        isEnabled: function(){
-            return _enabled;
+        isMuted: function(){
+            return Howler._muted;
+        },
+
+        stop: function(){
+            var files = loader.getAllFiles();
+            files.forEach(function(file){
+                if (file.audio)
+                    file.audio.stop();
+            })
         },
 
         mute: function(){
@@ -28,16 +31,6 @@ define(['jquery', 'plugins/loader', 'lodash', 'howler'], function ($, loader) {
 
         unmute: function(){
             Howler.unmute();
-        },
-
-        on: function(){
-            this.unmute();
-            _enabled = true;
-        },
-
-        off: function(){
-            this.mute();
-            _enabled = false;
         }
     };
 });
