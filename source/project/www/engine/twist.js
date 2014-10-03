@@ -11,7 +11,7 @@ define(['physics'], function (Physics) {
     Physics.behavior('twist', function (parent) {
 
         var defaults = {
-            koeff: 0.01
+            koeff: 0.1
         };
 
         return {
@@ -34,7 +34,7 @@ define(['physics'], function (Physics) {
                         return;
 
                     var angularVel = body.state.angular.vel,
-                        twistVector = new Physics.vector(angularVel * self._koeff * body.twist , 0);
+                        twistVector = new Physics.vector(angularVel * self._koeff, 0);
 
                     body.state.vel.vadd(twistVector);
 

@@ -66,11 +66,12 @@ define([
                             collisions.init(world);
 
                             world.on('arrow:ready', function () {
-                                world.ball.twist = twist.viewModel().twistvalue();
                                 _setWorldState('strike');
                                 audio.play('strike');
                                 twist.viewModel().hide();
                                 ball.strike(arrow.strikeVector);
+                                if (world.isAttack)
+                                    world.ball.state.angular.vel = -1 * twist.viewModel().twistvalue() / 200;
                                 goalkeeper.jump(arrow.strikeVector, ball.getRandomVector());
                             });
 

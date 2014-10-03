@@ -159,7 +159,6 @@ define(['jquery', 'physics', 'engine/points', 'plugins/loader'], function ($, Ph
             }
             _world.ball.accelerate(strikeVector);
             _world.ball.strikeVector = strikeVector;
-            _world.ball.state.angular.vel = -0.05;
         },
 
         init: function (world) {
