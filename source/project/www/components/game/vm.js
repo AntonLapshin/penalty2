@@ -1,4 +1,4 @@
-define(['ko', 'text!./view.html', 'engine/game', 'components/scores/vm'], function (ko, html, game, scores) {
+define(['ko', 'text!./view.html', 'engine/game', 'components/scores/vm', 'components/twist/vm'], function (ko, html, game, scores, twist) {
 
     $('*').on('selectstart', function () {
         return false;
@@ -55,6 +55,7 @@ define(['ko', 'text!./view.html', 'engine/game', 'components/scores/vm'], functi
 
             function result(isGoal) {
                 self.isVisible(false);
+                scores.viewModel().isVisible(false);
                 _defer.resolve(1, 0);
                 return;
                 var text = scores.viewModel().next(isGoal);
@@ -66,6 +67,7 @@ define(['ko', 'text!./view.html', 'engine/game', 'components/scores/vm'], functi
 
                 showMessage(text, function () {
                     self.isVisible(false);
+                    scores.viewModel().isVisible(false);
                     _defer.resolve(scores.viewModel().goalsA(), scores.viewModel().goalsB());
                 });
             }
@@ -81,7 +83,7 @@ define(['ko', 'text!./view.html', 'engine/game', 'components/scores/vm'], functi
             var self = this;
             require(['plugins/options', 'plugins/loader'], function (options, loader) {
                 loader.load(loader.resources.ENGINE).then(function () {
-                    self.show(options.teams[0], options.teams[1], 'A', 'B').
+                    self.show(options.teams[0], options.teams[1], 'A', 'A').
                         then(function (goals1, goals2) {
                             alert(goals1 + ' : ' + goals2);
                         });

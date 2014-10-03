@@ -20,7 +20,7 @@ define(['physics', 'jquery', 'engine/friction', 'engine/twist'],
 
                         world.add([
                             Physics.behavior('friction'),
-                            //Physics.behavior('twist'),
+                            Physics.behavior('twist'),
                             Physics.behavior('body-impulse-response'),
                             Physics.behavior('body-collision-detection'),
                             Physics.behavior('sweep-prune'),
@@ -49,6 +49,11 @@ define(['physics', 'jquery', 'engine/friction', 'engine/twist'],
                         };
                         world.getVectorLength = function (posRel) {
                             return (new Physics.vector(posRel)).vsub(world.getOffset());
+                        };
+                        world.getLength = function(vector){
+                            var x = vector.x,
+                                y = vector.y;
+                            return Math.sqrt(x*x + y*y);
                         };
                         // ---------- Extend World ----------
 

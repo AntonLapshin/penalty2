@@ -36,14 +36,17 @@ define(['ko', 'text!./view.html'], function (ko, html) {
             _moveTeamAB = firstTeamAB;
             _step = 1;
 
-            this.rounds = ko.observableArray([]);
+            // Clear teams for recreate them in a next game
+            this.rounds([]);
+            this.teamA(null);
+            this.teamB(null);
 
-            this.isVisible(true);
             this.teamA(teamA);
             this.teamB(teamB);
-
             this.newRound();
             _round[_moveTeamAB]('move');
+
+            this.isVisible(true);
         },
 
         next: function (isGoal) {

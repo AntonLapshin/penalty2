@@ -1,6 +1,6 @@
 <div class="scores" data-bind="visible: isVisible">
 
-    <!-- ko if: teamA && teamB -->
+    <!-- ko if: teamA() && teamB() -->
     <div class="score">
         <team params="value: teamA(), position: 'right'"></team>
         <span class="value" data-bind="text: '' + goalsA() + ':' + goalsB()"></span>

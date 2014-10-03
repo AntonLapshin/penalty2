@@ -10,10 +10,11 @@ define([
     'engine/goalkeeper',
     'engine/bullet',
     'engine/collisions',
-    'plugins/audio'
+    'plugins/audio',
+    'components/twist/vm'
 ],
     function (Physics, viewport, background, ball, objects, //camera,
-              Points, arrow, goalkeeper, bullet, collisions, audio) {
+              Points, arrow, goalkeeper, bullet, collisions, audio, twist) {
 
         var WIDTH = 700,
             HEIGHT = 800;
@@ -31,6 +32,8 @@ define([
             start: function (round, isAttack) {
                 _world.round = round;
                 _world.isAttack = isAttack;
+                if (isAttack)
+                    twist.viewModel().show();
                 Physics.util.ticker.start();
                 audio.play('stadium');
                 //camera.toPoint(Points.PenaltyCamera);
@@ -41,7 +44,7 @@ define([
 
             stop: function (delay) {
                 setTimeout(function () {
-                    audio.mute();
+                    audio.stop();
                     Physics.util.ticker.stop();
                 }, delay);
             },
@@ -59,12 +62,14 @@ define([
                             objects.init(world);
                             arrow.init(world);
                             //camera.init(world, WIDTH, HEIGHT, 2512, 2250);
-                            //bullet.init(world);
+                            bullet.init(world);
                             collisions.init(world);
 
                             world.on('arrow:ready', function () {
+                                world.ball.twist = twist.viewModel().twistvalue();
                                 _setWorldState('strike');
                                 audio.play('strike');
+                                twist.viewModel().hide();
                                 ball.strike(arrow.strikeVector);
                                 goalkeeper.jump(arrow.strikeVector, ball.getRandomVector());
                             });

@@ -1,11 +1,12 @@
 + Repair sounds
-Fix bug with teams in a next round (match, game)
-Add tail area for the ball
++ Fix bug with teams in a next round (match, game)
++ Add tail area for the ball
 + Check posting to the wall
++ Implement "choice of ball's spin" component
 Add soundtrack
 Add sounds (Buttons)
-Update the goalkeeper
-Add "choice of ball's spin" component
+Update the goalkeeper behaviour
+Remove places less 3
 
 Test app
 Publish to production

@@ -6,27 +6,27 @@ define(['ko', 'text!./view.html', 'plugins/audio'], function(ko, html, audio) {
 
     var _viewModel = {
         isVisible: ko.observable(false),
-        isEnabled: ko.observable(true),
+        isMuted: ko.observable(false),
 
         show: function(){
             this.isVisible(true);
         },
 
-        on: function(){
-            audio.on();
-            this.isEnabled(true);
+        unmute: function(){
+            audio.unmute();
+            this.isMuted(false);
         },
 
-        off: function(){
-            audio.off();
-            this.isEnabled(false);
+        mute: function(){
+            audio.mute();
+            this.isMuted(true);
         },
 
         press: function(){
-            if (audio.isEnabled())
-                this.off();
+            if (audio.isMuted())
+                this.unmute();
             else
-                this.on();
+                this.mute();
         },
 
         test: function(){

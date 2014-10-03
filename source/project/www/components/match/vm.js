@@ -18,12 +18,18 @@ define(['ko', 'text!./view.html'], function(ko, html) {
 
         show: function (teams, teamA, teamB) {
             this.teams = teams;
-            this.firstTeam(-1);
             this.isBallotVisible(true);
             this.isBeginVisible(false);
-            this.isVisible(true);
+
+            // Clear all teams for recreate them in a new match.
+            this.firstTeam(-1);
+            this.teamA(-1);
+            this.teamB(-1);
+
             this.teamA(teamA);
             this.teamB(teamB);
+
+            this.isVisible(true);
 
             return $.Deferred(function(defer){
                 _defer = defer;

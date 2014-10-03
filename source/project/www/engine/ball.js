@@ -165,6 +165,27 @@ define(['jquery', 'physics', 'engine/points', 'plugins/loader'], function ($, Ph
         init: function (world) {
             _world = world;
             _ball$ = loader.getFile('ball').image$;
+            var ballLayer = world._renderer.addLayer('ball', undefined, { manual: true, zIndex: 2 }),
+                ctx = ballLayer.ctx;
+
+            world.on('render', function (data) {
+                if (world.ball && world.ball.oldPos === undefined)
+                    world.ball.oldPos = world.ball.state.pos.clone();
+
+                if (world.state === 'strike' && world.ball && world.ball.oldPos){
+                    var pos = world.getPosRel(world.ball.state.pos);
+                    var diff = world.getLength(pos.vsub(world.ball.oldPos));
+                    if (diff < 20) return;
+
+                    ctx.globalAlpha = 0.2;
+                    ctx.beginPath();
+                    ctx.arc(world.ball.oldPos.x, world.ball.oldPos.y, 12, 0, 2 * Math.PI, false);
+                    ctx.fillStyle = '#fff';
+                    ctx.fill();
+                    ctx.globalAlpha = 1;
+                    world.ball.oldPos = world.ball.state.pos.clone();
+                }
+            });
         }
     };
 });

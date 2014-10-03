@@ -32,8 +32,9 @@ require([
     'components/result/vm',
     'components/game/vm',
     'components/scores/vm',
+    'components/twist/vm'
 ],
-    function (ko, text, loader, timer, sound, info, member, top, team, load, intro, choice, instruction, tournament, match, result, game, scores) {
+    function (ko, text, loader, timer, sound, info, member, top, team, load, intro, choice, instruction, tournament, match, result, game, scores, twist) {
         ko.components.register('timer', timer);
         ko.components.register('sound', sound);
         ko.components.register('info', info);
@@ -49,12 +50,13 @@ require([
         ko.components.register('result', result);
         ko.components.register('game', game);
         ko.components.register('scores', scores);
+        ko.components.register('twist', twist);
 
         ko.applyBindings({});
 
         loader.load(loader.resources.GAME).then(function(){
             //timer.viewModel().test();
-            sound.viewModel().test();
+            //sound.viewModel().test();
             //info.viewModel().test();
             //member.viewModel().test(); is no need
             //top.viewModel().test();
@@ -67,7 +69,8 @@ require([
             //match.viewModel().test();
             //result.viewModel().test();
             //scores.viewModel().test();
-            //game.viewModel().test();
+            game.viewModel().test();
+            //twist.viewModel().test();
         });
     });
 
