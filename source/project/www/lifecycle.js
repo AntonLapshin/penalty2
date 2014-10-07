@@ -1,17 +1,12 @@
 define(function () {
 
-    var PHOTO = 'photo-71627954_332801553',
-        APP_URL = 'https://vk.com/app4446829',
-        MESSAGE = 'Занятое место на чемпионате мира: {0}. Попробуй свои силы в послематчевых пенальти на чемпионате мира 2014 {1}';
-
     return {
         start: function () {
             require([
                 'ko',
                 'plugins/loader',
                 'plugins/options',
-                'plugins/vk',
-                'plugins/format',
+                'plugins/social',
                 'components/timer/vm',
                 'components/sound/vm',
                 'components/info/vm',
@@ -26,9 +21,10 @@ define(function () {
                 'components/match/vm',
                 'components/result/vm',
                 'components/scores/vm',
-                'components/game/vm'
+                'components/game/vm',
+                'components/twist/vm'
             ],
-                function (ko, loader, options, vk, format, timer, sound, info, member, top, team, load, intro, choice, instruction, tournament, match, result, scores, game) {
+                function (ko, loader, options, social, timer, sound, info, member, top, team, load, intro, choice, instruction, tournament, match, result, scores, game, twist) {
 
                     ko.components.register('timer', timer);
                     ko.components.register('sound', sound);
@@ -45,6 +41,7 @@ define(function () {
                     ko.components.register('result', result);
                     ko.components.register('scores', scores);
                     ko.components.register('game', game);
+                    ko.components.register('twist', twist);
 
                     ko.applyBindings({});
 
@@ -77,7 +74,7 @@ define(function () {
                                 return;
 
                             intro.viewModel().isVisible(false);
-                            //options.save();
+                            options.save();
                             info.viewModel().isVisible(false);
                             top.viewModel().isVisible(false);
 
@@ -99,8 +96,8 @@ define(function () {
                                         var score = (17 - place) * 1000 + options.goals * 10 + options.player.exp * 15 + options.player.goals;
                                         if (score > options.player.score)
                                             options.player.score = score;
-                                        //options.save();
-                                        vk.wallPost('photo-71627954_332801553', format(MESSAGE, place, APP_URL)).then(
+                                        options.save();
+                                        social.wallPost(place).then(
                                             function () {
                                                 top.viewModel().isVisible(true);
                                                 top.viewModel().sort();

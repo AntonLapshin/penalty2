@@ -152,6 +152,7 @@ define(['jquery', 'physics', 'engine/points', 'plugins/loader'], function ($, Ph
         toStart: function(){
             newGoalkeeper();
             _isNeedToReset = true;
+            _world.clearLayer('goalkeeper');
         },
 
         catch: function(){
@@ -203,12 +204,12 @@ define(['jquery', 'physics', 'engine/points', 'plugins/loader'], function ($, Ph
                 var ballVector = _world.ball.strikeVector;
                 var posStart = _goalkeeper.head.state.pos;
                 var posEnd = _world.ball.state.pos.clone().vadd(ballVector.clone().normalize().mult(PENALTY_LENGTH));
-                var idealJumpVector = posEnd.vsub(posStart).mult(JUMP_STREGTH);
+//                var idealJumpVector = posEnd.vsub(posStart).mult(JUMP_STREGTH);
                 var realJumpVector = strikeVector.mult(JUMP_STREGTH);
-                var dx = idealJumpVector.x - realJumpVector.x;
-                if (Math.abs(dx) > 2){
-                    realJumpVector.x += (dx - 1);
-                }
+//                var dx = idealJumpVector.x - realJumpVector.x;
+//                if (Math.abs(dx) > 2){
+//                    realJumpVector.x += (dx - 1);
+//                }
                 jumpVector = realJumpVector;
             }
 

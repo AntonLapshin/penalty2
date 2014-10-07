@@ -6,7 +6,7 @@
 #tournament-table {
     position: absolute;
     left: 0;
-    top: 0;
+    top: 2px;
 }
 
 #tournament-table img {

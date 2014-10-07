@@ -15,11 +15,10 @@ requirejs.config({
 
 window.DEBUG = false;
 
-require([ 'jquery', 'text', 'vk', 'lifecycle'],
-    function ($, text, vk, lifecycle) {
-        VK.init(function () {
+require([ 'jquery', 'text', 'plugins/social', 'lifecycle'],
+    function ($, text, social, lifecycle) {
+        social.init(social.SOCIAL_NETWORKS.vk).then(function(){
             lifecycle.start();
-        }, function () {
-        }, '5.21');
+        });
     });
 

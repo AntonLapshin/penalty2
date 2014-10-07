@@ -3,10 +3,10 @@
 + Add tail area for the ball
 + Check posting to the wall
 + Implement "choice of ball's spin" component
++ Update the goalkeeper behaviour
+
 Add soundtrack
 Add sounds (Buttons)
-Update the goalkeeper behaviour
-Remove places less 3
 
-Test app
-Publish to production
++ Test app
++ Publish to production

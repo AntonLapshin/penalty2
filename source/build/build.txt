@@ -59,6 +59,10 @@ www/components/tournament/style.css
 ----------------
 www/components/tournament/style.css
 
+www/components/twist/style.css
+----------------
+www/components/twist/style.css
+
 www/css/button.css
 ----------------
 www/css/button.css
@@ -84,6 +88,7 @@ www/components/instruction/style.css
 www/components/tournament/style.css
 www/components/game/style.css
 www/components/scores/style.css
+www/components/twist/style.css
 www/css/buttons.css
 www/css/button.css
 www/style.css
@@ -91,14 +96,13 @@ www/style.css
 www/main.js
 ----------------
 www/vendor/text.js
+www/plugins/social.js
 www/model/resources.js
 www/plugins/loader.js
 www/model/teams.js
 www/plugins/ajax.js
-www/plugins/vk.js
 www/plugins/players.js
 www/plugins/options.js
-www/plugins/format.js
 text!components/timer/view.html
 www/components/timer/vm.js
 text!components/sound/view.html
@@ -142,6 +146,8 @@ www/engine/goalkeeper.js
 www/vendor/tween.js
 www/engine/bullet.js
 www/engine/collisions.js
+text!components/twist/view.html
+www/components/twist/vm.js
 www/engine/game.js
 www/components/game/vm.js
 www/lifecycle.js

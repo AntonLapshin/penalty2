@@ -49,12 +49,12 @@ define(['ko', 'text!./view.html', 'plugins/players', 'components/member/vm'], fu
 
             var self = this;
 
-            players.getTopPlayers().then(function (players) {
+            players.getTopPlayers().then(function (resultPlayers) {
                 for (var i = 0; i < MAX_PLAYERS; i++) {
-                    if (players[i])
-                        players[i].place = i;
+                    if (resultPlayers[i])
+                        resultPlayers[i].place = i;
 
-                    self.allTop.push(players[i] ? players[i] : players.newPlayer());
+                    self.allTop.push(resultPlayers[i] ? resultPlayers[i] : players.newPlayer());
                 }
                 self.setVisiblePlayers(self.allTop);
             });

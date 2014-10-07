@@ -6,7 +6,6 @@ define(['ko', 'text!./view.html'], function (ko, html) {
 
         show: function () {
             this.isVisible(true);
-            //this.twistvalue(5);
         },
 
         hide: function(){

@@ -1,10 +1,8 @@
-define(['plugins/ajax', 'plugins/vk'], function (ajax, vk) {
-
-    var UNKNOW = '//vk.com/images/deactivated_50.gif';
+define(['plugins/ajax', 'plugins/social'], function (ajax, social) {
 
     function getPlayers(ids, idScoreDic){
         var players = [];
-        return vk.getUsers(ids).then(function(users){
+        return social.getUsers(ids).then(function(users){
             var players = [];
             for(var i = 0; i < users.length; i++){
                 players.push(newPlayer(users[i], idScoreDic[users[i].id]));
@@ -32,7 +30,7 @@ define(['plugins/ajax', 'plugins/vk'], function (ajax, vk) {
     function newPlayer(user, score){
         user = user || {
             id: '0',
-            img: UNKNOW,
+            img: social.getUnknowImg(),
             name: 'Пригласить друга'
         };
 
@@ -63,7 +61,7 @@ define(['plugins/ajax', 'plugins/vk'], function (ajax, vk) {
             var user,
                 score;
 
-            return vk.getUsers(id).then(function(res1){
+            return social.getUsers(id).then(function(res1){
                 user = res1[0];
                 return ajax.callAjax('scores', { ids: user.id });
             }).then(function(res2){
@@ -89,7 +87,7 @@ define(['plugins/ajax', 'plugins/vk'], function (ajax, vk) {
         },
 
         getFriendsPlayers: function(){
-            return vk.getFriendsUsers().then(function(ids){
+            return social.getFriendsUsers().then(function(ids){
                 if (ids.length === 0){
                     return [];
                 }

@@ -145,6 +145,7 @@ define(['jquery', 'physics', 'engine/points', 'plugins/loader'], function ($, Ph
             var ball = newBall();
             ball.state.pos.x = Points.PenaltyBall.x + random(0, 10) - 5;
             ball.state.pos.y = Points.PenaltyBall.y + random(0, 10) - 5;
+            _world.clearLayer('ball');
         },
 
         strike: function (vector) {
@@ -165,11 +166,12 @@ define(['jquery', 'physics', 'engine/points', 'plugins/loader'], function ($, Ph
             _world = world;
             _ball$ = loader.getFile('ball').image$;
             var ballLayer = world._renderer.addLayer('ball', undefined, { manual: true, zIndex: 2 }),
-                ctx = ballLayer.ctx;
+                ctx = world._renderer.layer('ball').ctx;
 
             world.on('render', function (data) {
-                if (world.ball && world.ball.oldPos === undefined)
+                if (world.ball && world.ball.oldPos === undefined){
                     world.ball.oldPos = world.ball.state.pos.clone();
+                }
 
                 if (world.state === 'strike' && world.ball && world.ball.oldPos){
                     var pos = world.getPosRel(world.ball.state.pos);
@@ -181,6 +183,7 @@ define(['jquery', 'physics', 'engine/points', 'plugins/loader'], function ($, Ph
                     ctx.arc(world.ball.oldPos.x, world.ball.oldPos.y, 12, 0, 2 * Math.PI, false);
                     ctx.fillStyle = '#fff';
                     ctx.fill();
+                    ctx.closePath();
                     ctx.globalAlpha = 1;
                     world.ball.oldPos = world.ball.state.pos.clone();
                 }

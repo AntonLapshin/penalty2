@@ -1,4 +1,4 @@
-define(['ko', 'text!./view.html', 'plugins/vk', 'components/info/vm'], function(ko, html, vk, info) {
+define(['ko', 'text!./view.html', 'plugins/social', 'components/info/vm'], function(ko, html, social, info) {
 
     var testData = {"id":5653333,"img":"https://pp.vk.me/c421118/v421118333/924b/C790w8WkLxE.jpg","name":"Anton Lapshin","score":15286,"goals":27,"miss":0,"exp":1,"last":1408680551237};
 
@@ -12,10 +12,10 @@ define(['ko', 'text!./view.html', 'plugins/vk', 'components/info/vm'], function(
         this.onClick = function(){
             if (self.player().id == 0) // may be "0"
             {
-                vk.invite();
+                social.invite();
                 return;
             }
-            var url = 'https://vk.com/id' + self.player().id;
+            var url = social.getUserUrl(self.player().id);
             var win = window.open(url, '_blank');
             win.focus();
         };

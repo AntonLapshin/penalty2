@@ -61,23 +61,19 @@ define(function () {
                 name: 'stadium',
                 src: 'engine/mp3/stadium.mp3',
                 loop: true,
-                duration: 7,
-                required: true
+                duration: 7
             },
             {
                 name: 'strike',
-                src: 'engine/mp3/strike.mp3',
-                required: true
+                src: 'engine/mp3/strike.mp3'
             },
             {
                 name: 'goal',
-                src: 'engine/mp3/goal.mp3',
-                required: true
+                src: 'engine/mp3/goal.mp3'
             },
             {
                 name: 'miss',
-                src: 'engine/mp3/miss.mp3',
-                required: true
+                src: 'engine/mp3/miss.mp3'
             }
         ]
     };

@@ -52,6 +52,10 @@ define([
             load: function () {
                 return $.Deferred(function(defer){
                     _defer = defer;
+                    if (_world) {
+                        _defer.notify('loaded');
+                        return;
+                    }
                     viewport.init(WIDTH, HEIGHT)
                         .then(function (world) {
                             _world = world;
@@ -77,17 +81,20 @@ define([
 
                             world.on('ball:crossbar', function () {
                                 _setWorldState('crossbar');
+                                world.ball.strikeVector = null;
                                 audio.play('miss');
                             });
 
                             world.on('ball:hand', function () {
                                 _setWorldState('hand');
                                 audio.play('miss');
+                                world.ball.strikeVector = null;
                                 goalkeeper.catch();
                             });
 
                             world.on('goal', function () {
                                 _setWorldState('goal');
+                                world.ball.strikeVector = null;
                                 audio.play('goal');
                             });
 

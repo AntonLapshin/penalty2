@@ -54,7 +54,7 @@ define(['ko', 'text!./view.html', 'jquery'], function(ko, html, $) {
             if (!_seconds)
                 return false;
 
-            $('#timer')
+            $('.timer')
                 .animate({ opacity: 1 }, 200)
                 .animate({ color: 'red' }, 100)
                 .animate({ opacity: 0.3 }, 500);

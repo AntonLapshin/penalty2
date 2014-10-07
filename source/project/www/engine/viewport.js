@@ -3,7 +3,6 @@ define(['physics', 'jquery', 'engine/friction', 'engine/twist'],
 
         return {
             init: function (width, height) {
-
                 return $.Deferred(function(defer){
                     Physics({ timestep: 2 }, function (world) {
                         var renderer = Physics.renderer('canvas', {
@@ -54,6 +53,11 @@ define(['physics', 'jquery', 'engine/friction', 'engine/twist'],
                             var x = vector.x,
                                 y = vector.y;
                             return Math.sqrt(x*x + y*y);
+                        };
+                        world.clearLayer = function(layerName){
+                            var layer = world._renderer.layer(layerName),
+                                ctx = layer.ctx;
+                            ctx.clearRect(0, 0, width, height);
                         };
                         // ---------- Extend World ----------
 

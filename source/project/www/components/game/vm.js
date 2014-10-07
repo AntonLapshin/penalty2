@@ -12,7 +12,7 @@ define(['ko', 'text!./view.html', 'engine/game', 'components/scores/vm', 'compon
         text: ko.observable(''),
 
         show: function (teamA, teamB, moveTeamAB, playerTeamAB) {
-            scores.viewModel().show(teamA, teamB, moveTeamAB);
+            scores.viewModel().show(teamA, teamB, playerTeamAB, moveTeamAB);
             var self = this;
 
             function showMessage(text, next) {
@@ -54,10 +54,12 @@ define(['ko', 'text!./view.html', 'engine/game', 'components/scores/vm', 'compon
             }
 
             function result(isGoal) {
-                self.isVisible(false);
-                scores.viewModel().isVisible(false);
-                _defer.resolve(1, 0);
-                return;
+                if (window.DEBUG){
+                    self.isVisible(false);
+                    scores.viewModel().isVisible(false);
+                    _defer.resolve(1, 0);
+                    return;
+                }
                 var text = scores.viewModel().next(isGoal);
 
                 if (!text){

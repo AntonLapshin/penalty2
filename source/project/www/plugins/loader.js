@@ -36,7 +36,13 @@ define(['model/resources', 'lodash', 'howler'], function (resources) {
             file.audio = new Howl({
                 urls: [require.toUrl(file.src)],
                 loop: file.loop,
-                onload: defer.resolve
+                onload: function() {
+                    defer.resolve()
+                }
+//                onloaderror: function(e){
+//                    console.error(e);
+//                    defer.reject(e);
+//                }
             });
 
             if (!file.required)

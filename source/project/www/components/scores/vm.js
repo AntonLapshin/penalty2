@@ -2,6 +2,7 @@ define(['ko', 'text!./view.html'], function (ko, html) {
 
     var _step,
         _moveTeamAB,
+        _playerTeamAB,
         _round;
 
     function random(min, max) {
@@ -32,14 +33,18 @@ define(['ko', 'text!./view.html'], function (ko, html) {
             this.rounds.push(_round);
         },
 
-        show: function (teamA, teamB, firstTeamAB) {
-            _moveTeamAB = firstTeamAB;
+        show: function (teamA, teamB, playerTeamAB, moveTeamAB) {
+            _playerTeamAB = playerTeamAB;
+            _moveTeamAB = moveTeamAB;
             _step = 1;
 
             // Clear teams for recreate them in a next game
             this.rounds([]);
             this.teamA(null);
             this.teamB(null);
+            this.goalsA(0);
+            this.goalsB(0);
+
 
             this.teamA(teamA);
             this.teamB(teamB);
@@ -61,7 +66,7 @@ define(['ko', 'text!./view.html'], function (ko, html) {
                     this.goalsB(this.goalsB() + 1);
             }
             if (_step >= 10 && _step % 2 === 0 && Math.abs(this.goalsA() - this.goalsB()) > 0) {
-                var text = _moveTeamAB == 'A' ?
+                var text = _playerTeamAB == 'A' ?
                     this.goalsA() > this.goalsB() ? 'Победа!' : 'Поражение' :
                     this.goalsA() > this.goalsB() ? 'Поражение' : 'Победа!';
 

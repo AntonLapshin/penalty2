@@ -1,4 +1,4 @@
-define(['ko', 'text!./view.html', 'plugins/vk'], function(ko, html, vk) {
+define(['ko', 'text!./view.html', 'plugins/social'], function(ko, html, social) {
 
     var _viewModel = {
         isVisible: ko.observable(false),
@@ -16,7 +16,7 @@ define(['ko', 'text!./view.html', 'plugins/vk'], function(ko, html, vk) {
         },
 
         invite: function(){
-            vk.invite();
+            social.invite();
         },
 
         test: function(){
