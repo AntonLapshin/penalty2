@@ -4,17 +4,9 @@ define(function(){
 
     return {
 
-        SOCIAL_NETWORKS: { vk: 'vk' },
-
-        init: function(name){
-            return $.Deferred(function(defer){
-                require(['plugins/' + name], function(socialNetwork){
-                    _socialNetwork = socialNetwork;
-                    _socialNetwork.init().then(function(){
-                        defer.resolve();
-                    });
-                });
-            });
+        init: function(socialNetwork){
+            _socialNetwork = socialNetwork;
+            return _socialNetwork.init();
         },
 
         invite: function () {

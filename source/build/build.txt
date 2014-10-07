@@ -151,4 +151,6 @@ www/components/twist/vm.js
 www/engine/game.js
 www/components/game/vm.js
 www/lifecycle.js
+www/plugins/format.js
+www/plugins/vk.js
 www/main.js

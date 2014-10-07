@@ -15,9 +15,9 @@ requirejs.config({
 
 window.DEBUG = false;
 
-require([ 'jquery', 'text', 'plugins/social', 'lifecycle'],
-    function ($, text, social, lifecycle) {
-        social.init(social.SOCIAL_NETWORKS.vk).then(function(){
+require([ 'jquery', 'text', 'plugins/social', 'lifecycle', 'plugins/vk'],
+    function ($, text, social, lifecycle, vk) {
+        social.init(vk).then(function(){
             lifecycle.start();
         });
     });
