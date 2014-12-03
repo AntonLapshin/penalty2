@@ -11,30 +11,37 @@ requirejs.config({
     }
 });
 
-window.DEBUG = false;
+window.DEBUG = true;
 
 require([
-    'ko',
-    'text',
-    'plugins/loader',
-    'components/timer/vm',
-    'components/sound/vm',
-    'components/info/vm',
-    'components/member/vm',
-    'components/top/vm',
-    'components/team/vm',
-    'components/load/vm',
-    'components/intro/vm',
-    'components/choice/vm',
-    'components/instruction/vm',
-    'components/tournament/vm',
-    'components/match/vm',
-    'components/result/vm',
-    'components/game/vm',
-    'components/scores/vm',
-    'components/twist/vm'
-],
-    function (ko, text, loader, timer, sound, info, member, top, team, load, intro, choice, instruction, tournament, match, result, game, scores, twist) {
+        'jquery',
+        'ko',
+        'text',
+        'social/social',
+        'social/test',
+        'social/vk',
+        'server/server',
+        'server/test',
+        'server/heroku',
+        'plugins/loader',
+        'components/timer/vm',
+        'components/sound/vm',
+        'components/info/vm',
+        'components/member/vm',
+        'components/top/vm',
+        'components/team/vm',
+        'components/load/vm',
+        'components/intro/vm',
+        'components/choice/vm',
+        'components/instruction/vm',
+        'components/tournament/vm',
+        'components/match/vm',
+        'components/result/vm',
+        'components/game/vm',
+        'components/scores/vm',
+        'components/twist/vm'
+    ],
+    function ($, ko, text, social, socialTest, vk, server, serverTest, heroku, loader, timer, sound, info, member, top, team, load, intro, choice, instruction, tournament, match, result, game, scores, twist) {
         ko.components.register('timer', timer);
         ko.components.register('sound', sound);
         ko.components.register('info', info);
@@ -54,23 +61,31 @@ require([
 
         ko.applyBindings({});
 
-        loader.load(loader.resources.GAME).then(function(){
-            //timer.viewModel().test();
-            //sound.viewModel().test();
-            //info.viewModel().test();
-            //member.viewModel().test(); is no need
-            //top.viewModel().test();
-            //team.viewModel().test(); is no need
-            //load.viewModel().test();
-            //intro.viewModel().test();
-            //choice.viewModel().test();
-            //instruction.viewModel().test();
-            //tournament.viewModel().test();
-            //match.viewModel().test();
-            //result.viewModel().test();
-            //scores.viewModel().test();
-            game.viewModel().test();
-            //twist.viewModel().test();
+        $('*').on('selectstart', function () {
+            return false;
         });
+
+        var socialInstance = window.DEBUG ? socialTest : vk,
+            serverInstance = window.DEBUG ? serverTest : heroku;
+
+        $.when.apply($, [social.init(socialInstance), server.init(serverInstance)])
+            .then(function () {
+//                timer.viewModel().test();
+//                sound.viewModel().test();
+//                info.viewModel().test();
+//                member.viewModel().test();
+//                top.viewModel().test();
+//                team.viewModel().test();
+//                load.viewModel().test();
+//                intro.viewModel().test();
+//                choice.viewModel().test();
+//                instruction.viewModel().test();
+//                tournament.viewModel().test();
+//                match.viewModel().test();
+//                result.viewModel().test();
+//                scores.viewModel().test();
+//                game.viewModel().test();
+//                twist.viewModel().test();
+            });
     });
 

@@ -6,7 +6,7 @@ define(function () {
                 'ko',
                 'plugins/loader',
                 'plugins/options',
-                'plugins/social',
+                'social/social',
                 'components/timer/vm',
                 'components/sound/vm',
                 'components/info/vm',
@@ -53,12 +53,13 @@ define(function () {
                             info.viewModel().init(options.player);
                             timer.viewModel().show(options.player.last);
                             sound.viewModel().show();
-                            return top.viewModel().load(options.player);
-                        })
-                        .then(function () {
-                            //todo: play soundtrack
+                            top.viewModel().show(options.player);
                             return intro.viewModel().show();
                         })
+//                        .then(function () {
+//                            //todo: play soundtrack
+//                            return intro.viewModel().show();
+//                        })
                         .progress(function (type) {
                             if (type === 'rules') {
                                 info.viewModel().isVisible(false);

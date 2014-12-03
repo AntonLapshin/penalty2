@@ -1,4 +1,4 @@
-define(['ko', 'text!./view.html'], function (ko, html) {
+define(['ko', 'text!./view.html', 'localization/strings'], function (ko, html, strings) {
 
     var _step,
         _moveTeamAB,
@@ -67,8 +67,8 @@ define(['ko', 'text!./view.html'], function (ko, html) {
             }
             if (_step >= 10 && _step % 2 === 0 && Math.abs(this.goalsA() - this.goalsB()) > 0) {
                 var text = _playerTeamAB == 'A' ?
-                    this.goalsA() > this.goalsB() ? 'Победа!' : 'Поражение' :
-                    this.goalsA() > this.goalsB() ? 'Поражение' : 'Победа!';
+                    this.goalsA() > this.goalsB() ? strings.txtWin() : strings.txtDefeat() :
+                    this.goalsA() > this.goalsB() ? strings.txtDefeat() : strings.txtWin();
 
                 return text;
             }
@@ -80,8 +80,10 @@ define(['ko', 'text!./view.html'], function (ko, html) {
 
         test: function () {
             var self = this;
+
             require(['plugins/options'], function (options) {
-                self.show(options.teams[2], options.teams[3], 'A');
+                self.show(options.teams[2], options.teams[3], 'A', 'A');
+                $('.score').css('background-color', 'grey');
                 var interval = setInterval(function () {
                     var result = self.next(random(0, 2) === 1);
                     if (result){

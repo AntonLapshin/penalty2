@@ -1,4 +1,4 @@
-define(['ko', 'text!./view.html', 'plugins/social'], function(ko, html, social) {
+define(['ko', 'text!./view.html', 'social/social', 'localization/strings'], function(ko, html, social, strings) {
 
     var _viewModel = {
         isVisible: ko.observable(false),
@@ -6,6 +6,11 @@ define(['ko', 'text!./view.html', 'plugins/social'], function(ko, html, social) 
         goals: ko.observable(),
         team: ko.observable(null),
         score: ko.observable(),
+        title: strings.titleResults,
+        txtPlace: strings.txtPlace,
+        txtGoals: strings.goals,
+        linkGroup: strings.linkGroup,
+        linkInvite: strings.linkInvite,
 
         show: function(score, place, team, goals){
             this.score(score);
@@ -21,6 +26,12 @@ define(['ko', 'text!./view.html', 'plugins/social'], function(ko, html, social) 
 
         test: function(){
             var self = this;
+
+            require(['plugins/loader'], function (loader) {
+                loader.load(loader.resources.GAME).then(function () {
+                });
+            });
+
             require(['plugins/options'], function(options){
                 self.show(1000, 2, options.teams[2], 12);
             });

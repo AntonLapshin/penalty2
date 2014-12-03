@@ -1,4 +1,10 @@
-define(['ko', 'text!./view.html', 'engine/game', 'components/scores/vm', 'components/twist/vm'], function (ko, html, game, scores, twist) {
+define([
+    'ko',
+    'text!./view.html',
+    'engine/game',
+    'components/scores/vm',
+    'localization/strings'
+], function (ko, html, game, scores, strings) {
 
     $('*').on('selectstart', function () {
         return false;
@@ -33,22 +39,22 @@ define(['ko', 'text!./view.html', 'engine/game', 'components/scores/vm', 'compon
                         break;
                     case 'start':
                         self.isVisible(true);
-                        showMessage(playerTeamAB === scores.viewModel().getMoveTeamAB() ? 'Удар вашей команды' : 'Удар соперника');
+                        showMessage(playerTeamAB === scores.viewModel().getMoveTeamAB() ? strings.turnPlayer() : strings.turnComputer());
                         break;
                     case 'goal':
                         game.stop(1500);
-                        showMessage('Гол!', function () {
+                        showMessage(strings.goal(), function () {
                             result(true);
                         });
                         break;
                     case 'end':
                         game.stop(0);
-                        showMessage('Промах', function () {
+                        showMessage(strings.miss(), function () {
                             result(false);
                         });
                         break;
                     case 'crossbar':
-                        showMessage('Штанга!');
+                        showMessage(strings.crossbar());
                         break;
                 }
             }

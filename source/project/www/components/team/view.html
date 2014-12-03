@@ -1,14 +1,14 @@
-<div class="team">
-    <!-- ko if: model -->
+<div class="team" data-bind="visible: isVisible">
+    <!-- ko if: team -->
 
-    <!-- ko if: position == 'left' -->
-    <div data-bind="css: model().className"></div>
-    <span data-bind="text: model().name, css: { 'playerTeam': model().isPlayer }"></span>
+    <!-- ko if: position() == 'left' -->
+    <div data-bind="css: team().className"></div>
+    <span data-bind="text: team().name, css: { 'playerTeam': team().isPlayer }"></span>
     <!-- /ko -->
 
-    <!-- ko if: position == 'right' -->
-    <span data-bind="text: model().name, css: { 'playerTeam': model().isPlayer }"></span>
-    <div data-bind="css: model().className"></div>
+    <!-- ko if: position() == 'right' -->
+    <span data-bind="text: team().name, css: { 'playerTeam': team().isPlayer }"></span>
+    <div data-bind="css: team().className"></div>
     <!-- /ko -->
 
     <!-- /ko -->

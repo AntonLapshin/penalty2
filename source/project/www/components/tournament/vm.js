@@ -1,4 +1,4 @@
-define(['ko', 'text!./view.html'], function(ko, html) {
+define(['ko', 'text!./view.html', 'localization/strings'], function(ko, html, strings) {
 
     var _defer;
 
@@ -58,6 +58,7 @@ define(['ko', 'text!./view.html'], function(ko, html) {
         rounds: ko.observableArray(),
         teams: null,
         champion: ko.observable(-1),
+        txtGoRound: strings.txtGoRound,
 
         show: function (teams, playerTeamIndex) {
             _round = 0;
@@ -160,6 +161,12 @@ define(['ko', 'text!./view.html'], function(ko, html) {
 
         test: function(){
             var self = this;
+
+            require(['plugins/loader'], function (loader) {
+                loader.load(loader.resources.GAME).then(function () {
+                });
+            });
+
             require(['plugins/options'], function(options){
                 options.init(5);
                 self.show(options.teams, 5).progress(function(type, args){

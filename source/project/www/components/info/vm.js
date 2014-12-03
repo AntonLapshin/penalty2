@@ -1,30 +1,35 @@
-define(['ko', 'text!./view.html'], function(ko, html) {
-
-    var _interval,
-        _seconds,
-        _debug = false;
+define(['ko', 'text!./view.html', 'localization/strings'], function(ko, html, strings) {
 
     var _viewModel = {
         isVisible: ko.observable(false),
-        player: ko.observable(null),
+        user: ko.observable(null),
+        scores: strings.scores,
+        goals: strings.goals,
+        exp: strings.exp,
 
         show: function(item){
             if (item.id == 0) return;
-            this.player(item);
+            this.user(item);
             this.isVisible(true);
         },
 
         hide: function(){
-            this.player(this.defaultPlayer);
+            this.user(this.defaultUser);
         },
 
-        init: function(defaultPlayer){
-            this.defaultPlayer = defaultPlayer;
+        init: function(defaultUser){
+            this.defaultUser = defaultUser;
             this.hide();
         },
 
         test: function(){
-            this.show({"id":5653333,"img":"https://pp.vk.me/c421118/v421118333/924b/C790w8WkLxE.jpg","name":"Anton Lapshin","score":15286,"goals":27,"miss":0,"exp":1,"last":1408680551237})
+            var self = this;
+            require(['controllers/users'], function (UsersController) {
+                UsersController.getOneUser(1)
+                    .then(function(users){
+                        self.show(users);
+                    });
+            });
         }
     };
 

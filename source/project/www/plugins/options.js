@@ -1,4 +1,4 @@
-define(['model/teams', 'plugins/ajax', 'plugins/players'], function (teams, ajax, players) {
+define(['model/teams', 'server/server', 'controllers/users'], function (teams, server, UsersController) {
 
     return {
         teams: teams,
@@ -13,7 +13,7 @@ define(['model/teams', 'plugins/ajax', 'plugins/players'], function (teams, ajax
         },
 
         save: function () {
-            return ajax.callAjax('upsert', {
+            return server.saveUser({
                 id: this.player.id,
                 score: this.player.score,
                 goals: this.player.goals,
@@ -24,9 +24,9 @@ define(['model/teams', 'plugins/ajax', 'plugins/players'], function (teams, ajax
 
         load: function () {
             var self = this;
-            return players.getOnePlayer(undefined)
-                .then(function (player) {
-                    self.player = player;
+            return UsersController.getOneUser(undefined)
+                .then(function (user) {
+                    self.player = user;
                 });
         },
 

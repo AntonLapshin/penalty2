@@ -1,8 +1,9 @@
-define(['ko', 'text!./view.html'], function (ko, html) {
+define(['ko', 'text!./view.html', 'localization/strings'], function (ko, html, strings) {
 
     var _viewModel = {
         isVisible: ko.observable(false),
         twistvalue: ko.observable(0),
+        txtTwistBall: strings.txtTwistBall,
 
         show: function () {
             this.isVisible(true);

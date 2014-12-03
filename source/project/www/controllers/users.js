@@ -1,4 +1,4 @@
-define(['plugins/ajax', 'plugins/social'], function (ajax, social) {
+define(['server/server', 'social/social'], function (server, social) {
 
     function getPlayers(ids, idScoreDic){
         var players = [];
@@ -57,46 +57,32 @@ define(['plugins/ajax', 'plugins/social'], function (ajax, social) {
 
         newPlayer: newPlayer,
 
-        getOnePlayer: function(id){
-            var user,
-                score;
-
-            return social.getUsers(id).then(function(res1){
-                user = res1[0];
-                return ajax.callAjax('scores', { ids: user.id });
-            }).then(function(res2){
-                score = res2.length === 1 ? res2[0] : null;
-                return newPlayer(user, score);
-            });
-        },
-
-        getTopPlayers: function(){
-            return ajax.callAjax('top', null).then(function (scores) {
-                if (scores.length == 0){
-                    return [];
-                }
-                var ids = [];
-                var idScoreDicFromDb = parseScores(scores);
-                for (var i = 0; i < scores.length; i++) {
-                    ids.push(scores[i]._id);
-                }
-                var idsText = ids.join(',');
-                var idScoreDic = getIdScoreDic(ids, idScoreDicFromDb);
-                return getPlayers(idsText, idScoreDic);
-            });
-        },
-
-        getFriendsPlayers: function(){
-            return social.getFriendsUsers().then(function(ids){
-                if (ids.length === 0){
-                    return [];
-                }
-                return ajax.callAjax('scores', { ids: ids }).then(function(scores){
-                    var idScoreDicFromDb = parseScores(scores);
-                    var idsText = ids.join(',');
-                    var idScoreDic = getIdScoreDic(ids, idScoreDicFromDb);
-                    return getPlayers(idsText, idScoreDic);
+        getOneUser: function(id){
+            return social.getUsers(id).then(function(user){
+                return $.Deferred(function(defer){
+                    server.loadUsers(user)
+                        .then(function(users){
+                            defer.resolve(users[0]);
+                        });
                 });
+            })
+        },
+
+        getTopUsers: function(){
+            return server.loadTopUsers().then(function (users) {
+                if (users.length == 0){
+                    return [];
+                }
+                return social.getUsers(users);
+            });
+        },
+
+        getFriendsUsers: function(){
+            return social.getFriendsUsers().then(function(users){
+                if (users.length === 0){
+                    return [];
+                }
+                return server.loadUsers(users);
             });
         }
     };

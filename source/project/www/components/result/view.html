@@ -1,18 +1,18 @@
 <div class="result" data-bind="visible: isVisible">
-    <h1>Результаты чемпионата</h1>
+    <h1 data-bind="text: title"></h1>
 
     <p class="score" data-bind="text: score"></p>
 
     <div class="info">
         <!-- ko if: team -->
-        <p><team params="value: team()"></team></p>
+        <p><team params="name: 'result1', team: team()"></team></p>
         <!-- /ko -->
 
-        <p>Занятое место: <span data-bind="text: place"></span></p>
+        <p><span data-bind="text: txtPlace"></span> <span>:</span> <span data-bind="text: place"></span></p>
 
-        <p>Количество забитых мячей: <span data-bind="text: goals"></span></p>
+        <p><span data-bind="text: txtGoals"></span> <span>:</span> <span data-bind="text: goals"></span></p>
     </div>
 
-    <a href="//vk.com/club71627954" class="push_button red" target="_blank">Перейти в группу :)</a>
-    <a href="#" class="push_button blue" data-bind="click: invite">Пригласить друзей</a>
+    <a href="//vk.com/club71627954" data-bind="text: linkGroup" class="push_button red" target="_blank"></a>
+    <a href="#" class="push_button blue" data-bind="text: linkInvite, click: invite"></a>
 </div>

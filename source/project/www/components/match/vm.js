@@ -1,4 +1,4 @@
-define(['ko', 'text!./view.html'], function(ko, html) {
+define(['ko', 'text!./view.html', 'localization/strings'], function(ko, html, strings) {
 
     function random(min, max) {
         return (Math.random() * (max - min) + min) | 0
@@ -15,6 +15,9 @@ define(['ko', 'text!./view.html'], function(ko, html) {
         teamB: ko.observable(-1),
         firstTeam: ko.observable(-1),
         teams: null,
+        firstTurn: strings.firstTurn,
+        drawLot: strings.drawLot,
+        btnStart: strings.btnStart,
 
         show: function (teams, teamA, teamB) {
             this.teams = teams;
@@ -49,6 +52,12 @@ define(['ko', 'text!./view.html'], function(ko, html) {
 
         test: function(){
             var self = this;
+
+            require(['plugins/loader'], function (loader) {
+                loader.load(loader.resources.GAME).then(function () {
+                });
+            });
+
             require(['plugins/options'], function(options){
                 self.show(options.teams, 1, 2).then(function(firstTeam){
                     alert('First turn team is ' + firstTeam);

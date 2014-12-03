@@ -1,4 +1,4 @@
-define(['ko', 'text!./view.html'], function(ko, html) {
+define(['ko', 'text!./view.html', 'localization/strings'], function(ko, html, strings) {
 
     var _interval,
         _seconds,
@@ -8,9 +8,11 @@ define(['ko', 'text!./view.html'], function(ko, html) {
     var _viewModel = {
         isVisible: ko.observable(false),
 
-        header1: 'Пенальти.',
-        header2: 'Чемпионат мира по футболу 2014.',
-        desc: 'Сыграй за одну из любимых команд на чемпионате мира по футболу 2014 в Бразилии. Игра начнется со стадии плей-офф между вышедшими из группового этапа командами.',
+        header1: strings.header1,
+        header2: strings.header2,
+        desc: strings.introDesc,
+        btnStart: strings.btnStart,
+        btnInstruction: strings.btnInstruction,
 
         show: function(){
             this.isVisible(true);
@@ -33,6 +35,11 @@ define(['ko', 'text!./view.html'], function(ko, html) {
         },
 
         test: function(){
+            require(['plugins/loader'], function (loader) {
+                loader.load(loader.resources.GAME).then(function () {
+                });
+            });
+
             this.show().progress(function(result){
                 alert(result);
             });

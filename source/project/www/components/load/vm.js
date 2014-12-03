@@ -1,4 +1,4 @@
-define(['ko', 'text!./view.html', 'jquery'], function(ko, html, $) {
+define(['ko', 'text!./view.html', 'jquery', 'localization/strings'], function(ko, html, $, strings) {
 
     var _interval,
         _seconds,
@@ -9,13 +9,12 @@ define(['ko', 'text!./view.html', 'jquery'], function(ko, html, $) {
         isVisible: ko.observable(false),
         isLoaded: ko.observable(false),
         percent: ko.observable(0),
-        buttonName: ko.observable('Начать'),
+        buttonName: strings.btnStart,
 
-        show: function(buttonName){
+        show: function(){
             this.percent(0);
             this.isVisible(true);
             this.isLoaded(false);
-            this.buttonName(buttonName);
             var self = this;
             return $.Deferred(function(defer){
                 _defer = defer;
@@ -34,8 +33,8 @@ define(['ko', 'text!./view.html', 'jquery'], function(ko, html, $) {
         },
 
         test: function(){
-            this.show('Test').then(function(){
-                alert('Finish');
+            this.show().then(function(){
+                console.log('Finish');
             });
 
             var p = 0;

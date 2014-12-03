@@ -1,14 +1,27 @@
-define(['ko', 'text!./view.html'], function(ko, html) {
-
-    var testData = { power: 9, player: false, name: 'Бразилия', className: 'team-brazil' };
+define(['ko', 'text!./view.html', 'plugins/viewmodel'], function(ko, html, vm) {
 
     function ViewModel(params) {
-        var teamModel = params.value ? params.value : testData;
-        if (typeof teamModel === 'function')
-            teamModel = teamModel();
-        this.position = !params.position ? 'left' : params.position;
-        this.model = ko.observable(teamModel);
+        this.team = ko.observable();
+        this.position = ko.observable('left');
+
+        this.show = function(team, position){
+            this.team(team);
+            this.position(position ? position : 'left');
+            this.isVisible(true);
+        };
+
+        this.test = function(){
+            var self = this;
+            require(['model/teams'], function(teams){
+                self.show(teams[0]);
+            });
+        };
     }
 
-    return { viewModel: ViewModel, template: html };
+    return { viewModel: function (params) {
+        var ins = vm.getViewModel(params, 'team', ViewModel);
+        if (params && params.team)
+            ins.show(typeof params.team === 'function' ? params.team() : params.team, params.position);
+        return ins;
+    }, template: html };
 });

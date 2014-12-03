@@ -13,12 +13,36 @@ requirejs.config({
     }
 });
 
-window.DEBUG = false;
+window.DEBUG = true;
 
-require([ 'jquery', 'text', 'plugins/social', 'lifecycle', 'plugins/vk'],
-    function ($, text, social, lifecycle, vk) {
-        social.init(vk).then(function(){
-            lifecycle.start();
-        });
+require([
+        'jquery',
+        'text',
+        'lifecycle',
+        'social/social',
+        'social/test',
+        'social/vk',
+        'server/server',
+        'server/test',
+        'server/heroku',
+    ],
+    function ($,
+              text,
+              lifecycle,
+              social,
+              socialTest,
+              vk,
+              server,
+              serverTest,
+              heroku
+        ) {
+
+        var socialInstance = window.DEBUG ? socialTest : vk,
+            serverInstance = window.DEBUG ? serverTest : heroku;
+
+        $.when.apply($, [social.init(socialInstance), server.init(serverInstance)])
+            .then(function () {
+                lifecycle.start();
+            });
     });
 

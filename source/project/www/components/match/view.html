@@ -6,18 +6,18 @@
 
     <div class="teams">
         <!-- ko if: teamA() >= 0 -->
-        <team params="value: teams[teamA()]"></team>
+        <team params="name: 'match1', team: teams[teamA()]"></team>
         <!-- /ko -->
         <p>VS</p>
         <!-- ko if: teamB() >= 0 -->
-        <team params="value: teams[teamB()]"></team>
+        <team params="name: 'match2', team: teams[teamB()]"></team>
         <!-- /ko -->
     </div>
 
-    <h2>Право первого удара: </h2>
-    <a href="#" class="push_button blue small" data-bind="visible: isBallotVisible, click: ballot">(Кинуть жребий)</a>
+    <h2 data-bind="text: firstTurn">Право первого удара: </h2>
+    <a href="#" class="push_button blue small" data-bind="text: drawLot, visible: isBallotVisible, click: ballot"></a>
     <!-- ko if: firstTeam() >= 0 -->
-    <team params="value: teams[firstTeam()]"></team>
+    <team params="name: 'match3', team: teams[firstTeam()]"></team>
     <!-- /ko -->
 
     <br/>
@@ -25,7 +25,7 @@
     <br/>
 
     <a href="#" class="button" data-bind="visible: isBeginVisible, click: beginGame">
-        <span>Начать игру</span>
+        <span data-bind="text: btnStart"></span>
     </a>
 
 </div>

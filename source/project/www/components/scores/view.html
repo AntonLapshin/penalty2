@@ -2,9 +2,9 @@
 
     <!-- ko if: teamA() && teamB() -->
     <div class="score">
-        <team params="value: teamA(), position: 'right'"></team>
+        <team params="name: 'scores1', team: teamA(), position: 'right'"></team>
         <span class="value" data-bind="text: '' + goalsA() + ':' + goalsB()"></span>
-        <team params="value: teamB(), position: 'left'"></team>
+        <team params="name: 'scores2', team: teamB(), position: 'left'"></team>
     </div>
     <div class="stats">
         <div class="round">
