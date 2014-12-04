@@ -39,9 +39,10 @@ require([
         'components/result/vm',
         'components/game/vm',
         'components/scores/vm',
-        'components/twist/vm'
+        'components/twist/vm',
+        'components/lang/vm'
     ],
-    function ($, ko, text, social, socialTest, vk, server, serverTest, heroku, loader, timer, sound, info, member, top, team, load, intro, choice, instruction, tournament, match, result, game, scores, twist) {
+    function ($, ko, text, social, socialTest, vk, server, serverTest, heroku, loader, timer, sound, info, member, top, team, load, intro, choice, instruction, tournament, match, result, game, scores, twist, lang) {
         ko.components.register('timer', timer);
         ko.components.register('sound', sound);
         ko.components.register('info', info);
@@ -58,6 +59,7 @@ require([
         ko.components.register('game', game);
         ko.components.register('scores', scores);
         ko.components.register('twist', twist);
+        ko.components.register('lang', lang);
 
         ko.applyBindings({});
 
@@ -86,6 +88,7 @@ require([
 //                scores.viewModel().test();
 //                game.viewModel().test();
 //                twist.viewModel().test();
+                lang.viewModel().test();
             });
     });
 

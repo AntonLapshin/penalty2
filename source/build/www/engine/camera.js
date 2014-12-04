@@ -1,1 +1,131 @@
-define(["jquery","physics"],function(e,t){function n(e){var t=0,n=0;if(e.offsetParent)do t+=e.offsetLeft,n+=e.offsetTop;while(e=e.offsetParent);return{left:t,top:n}}function r(e){var t=n(e.target),r=e.changedTouches&&e.changedTouches[0]||e,i=r.pageX-t.left,s=r.pageY-t.top;return{x:i,y:s}}return{init:function(e,n,i,s,o){function f(e){var n=e.x,r=e.y,i=0,s=0;return n<a.minX?i=a.minX:n>a.maxX?i=a.maxX:i=n,r<a.minY?s=a.minY:r>a.maxY?s=a.maxY:s=r,t.vector(i,s)}this.width=n,this.height=i,this.minX=n/2,this.minY=i/2,this.maxX=s-n,this.maxY=o-i,this.middle={x:n/2,y:i/2};var u=e.getTopLayer(),a=this;e.on("step",function(){a.mode==="follow"?e.getOffset().clone(a.middle).vsub(f(a.followObject.state.pos)):a.mode==="point"&&e.getOffset().clone(a.middle).vsub(f(a.targetPoint))});var l=!1,c=null,h=function(n){var i=e.getPosAbs(new t.vector(r(n))),s=e.findOne({$at:i});s||(l=!0,c=i,a.mode="grab")},p=function(n){if(l){var i=e.getPosAbs(new t.vector(r(n))),s=i.clone().vsub(c),o=e.getOffset(),u=new t.vector(Math.abs(o.x)+a.minX,Math.abs(o.y)+a.minY),h=u.vsub(s);e.getOffset().clone(a.middle).vsub(f(h))}},d=function(e){l=!1,c=null};u.el.addEventListener("mousedown",h),u.el.addEventListener("touchstart",h),u.el.addEventListener("mousemove",p),u.el.addEventListener("touchmove",p),u.el.addEventListener("mouseup",d),u.el.addEventListener("touchend",d)},followObject:null,targetPoint:null,mode:null,follow:function(e){this.targetPoint=null,this.followObject=e,this.mode="follow"},toPoint:function(e){this.followObject=null,this.targetPoint=new t.vector(e),this.mode="point"}}});
+define(['jquery', 'physics'], function ($, Physics) {
+
+    function getElementOffset(el) {
+        var curleft = 0,
+            curtop = 0;
+
+        if (el.offsetParent) {
+            do {
+                curleft += el.offsetLeft;
+                curtop += el.offsetTop;
+            } while (el = el.offsetParent);
+        }
+
+        return { left: curleft, top: curtop };
+    }
+
+    function getCoords(e) {
+        var offset = getElementOffset(e.target),
+            obj = ( e.changedTouches && e.changedTouches[0] ) || e,
+            x = obj.pageX - offset.left,
+            y = obj.pageY - offset.top;
+
+        return { x: x, y: y };
+    }
+
+    return {
+
+        init: function(world, width, height, sizeX, sizeY){
+
+            this.width = width;
+            this.height = height;
+            this.minX = width / 2;
+            this.minY = height / 2;
+            this.maxX = sizeX - width;
+            this.maxY = sizeY - height;
+            this.middle = { x: width / 2, y: height / 2 };
+
+            var topLayer = world.getTopLayer(),
+                self = this;
+
+            function getTargetVector(pos){
+                var x = pos.x,
+                    y = pos.y,
+                    newX = 0,
+                    newY = 0;
+
+                if (x < self.minX)
+                    newX = self.minX;
+                else if (x > self.maxX)
+                    newX = self.maxX;
+                else
+                    newX = x;
+
+                if (y < self.minY)
+                    newY = self.minY;
+                else if (y > self.maxY)
+                    newY = self.maxY;
+                else
+                    newY = y;
+
+                return Physics.vector(newX, newY);
+            }
+
+            world.on('step', function(){
+                if (self.mode === 'follow')
+                {
+                    world.getOffset().clone( self.middle ).vsub( getTargetVector(self.followObject.state.pos) );
+                }
+                else if (self.mode === 'point')
+                {
+                    world.getOffset().clone( self.middle ).vsub( getTargetVector(self.targetPoint) );
+                }
+            });
+
+            var isGrab = false;
+            var startPosAbs = null;
+
+            var grab = function (e) {
+                var posAbs = world.getPosAbs(new Physics.vector(getCoords(e))),
+                    body = world.findOne({ $at: posAbs });
+
+                if (!body) {
+                    isGrab = true;
+                    startPosAbs = posAbs;
+                    self.mode = 'grab';
+                }
+            };
+
+            var move = function (e) {
+                if (isGrab){
+                    var posAbs = world.getPosAbs(new Physics.vector(getCoords(e)));
+                    var diffVector = posAbs.clone().vsub(startPosAbs);
+                    var offset = world.getOffset();
+                    var cameraPos = new Physics.vector(Math.abs(offset.x) + self.minX, Math.abs(offset.y) + self.minY);
+                    var resultPos = cameraPos.vsub(diffVector);
+                    world.getOffset().clone( self.middle ).vsub( getTargetVector(resultPos) );
+                }
+            };
+
+            var release = function (e) {
+                isGrab = false;
+                startPosAbs = null;
+            };
+
+            topLayer.el.addEventListener('mousedown', grab);
+            topLayer.el.addEventListener('touchstart', grab);
+            topLayer.el.addEventListener('mousemove', move);
+            topLayer.el.addEventListener('touchmove', move);
+            topLayer.el.addEventListener('mouseup', release);
+            topLayer.el.addEventListener('touchend', release);
+        },
+
+        followObject: null,
+        targetPoint: null,
+        mode: null,
+
+        follow: function(body){
+            this.targetPoint = null;
+            this.followObject = body;
+            this.mode = 'follow';
+        },
+
+        toPoint: function(point){
+            this.followObject = null;
+            this.targetPoint = new Physics.vector(point);
+            this.mode = 'point';
+        }
+
+    };
+
+});

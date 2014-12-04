@@ -14,9 +14,11 @@
 @import url('components/game/style.css');
 @import url('components/scores/style.css');
 @import url('components/twist/style.css');
+@import url('components/lang/style.css');
 
 @import url('css/buttons.css');
 @import url('css/button.css');
+@import url('css/switch.css');
 
 body {
     font-family: 'Roboto Condensed', sans-serif;

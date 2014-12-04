@@ -22,9 +22,10 @@ define(function () {
                 'components/result/vm',
                 'components/scores/vm',
                 'components/game/vm',
-                'components/twist/vm'
+                'components/twist/vm',
+                'components/lang/vm'
             ],
-                function (ko, loader, options, social, timer, sound, info, member, top, team, load, intro, choice, instruction, tournament, match, result, scores, game, twist) {
+                function (ko, loader, options, social, timer, sound, info, member, top, team, load, intro, choice, instruction, tournament, match, result, scores, game, twist, lang) {
 
                     ko.components.register('timer', timer);
                     ko.components.register('sound', sound);
@@ -42,6 +43,7 @@ define(function () {
                     ko.components.register('scores', scores);
                     ko.components.register('game', game);
                     ko.components.register('twist', twist);
+                    ko.components.register('lang', lang);
 
                     ko.applyBindings({});
 
@@ -50,6 +52,7 @@ define(function () {
                             return options.load();
                         })
                         .then(function () {
+                            lang.viewModel().show();
                             info.viewModel().init(options.player);
                             timer.viewModel().show(options.player.last);
                             sound.viewModel().show();
