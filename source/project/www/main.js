@@ -20,25 +20,25 @@ require([
         'text',
         'lifecycle',
         'social/social',
-        'social/test',
+        'social/demo',
         'social/vk',
         'server/server',
-        'server/test',
+        'server/demo',
         'server/heroku',
     ],
     function ($,
               text,
               lifecycle,
               social,
-              socialTest,
+              socialDemo,
               vk,
               server,
-              serverTest,
+              serverDemo,
               heroku
         ) {
 
-        var socialInstance = window.DEBUG ? socialTest : vk,
-            serverInstance = window.DEBUG ? serverTest : heroku;
+        var socialInstance = window.DEBUG ? socialDemo : vk,
+            serverInstance = window.DEBUG ? serverDemo : heroku;
 
         $.when.apply($, [social.init(socialInstance), server.init(serverInstance)])
             .then(function () {

@@ -18,10 +18,10 @@ require([
         'ko',
         'text',
         'social/social',
-        'social/test',
+        'social/demo',
         'social/vk',
         'server/server',
-        'server/test',
+        'server/demo',
         'server/heroku',
         'plugins/loader',
         'components/timer/vm',
@@ -42,7 +42,7 @@ require([
         'components/twist/vm',
         'components/lang/vm'
     ],
-    function ($, ko, text, social, socialTest, vk, server, serverTest, heroku, loader, timer, sound, info, member, top, team, load, intro, choice, instruction, tournament, match, result, game, scores, twist, lang) {
+    function ($, ko, text, social, socialDemo, vk, server, serverDemo, heroku, loader, timer, sound, info, member, top, team, load, intro, choice, instruction, tournament, match, result, game, scores, twist, lang) {
         ko.components.register('timer', timer);
         ko.components.register('sound', sound);
         ko.components.register('info', info);
@@ -67,8 +67,8 @@ require([
             return false;
         });
 
-        var socialInstance = window.DEBUG ? socialTest : vk,
-            serverInstance = window.DEBUG ? serverTest : heroku;
+        var socialInstance = window.DEBUG ? socialDemo : vk,
+            serverInstance = window.DEBUG ? serverDemo : heroku;
 
         $.when.apply($, [social.init(socialInstance), server.init(serverInstance)])
             .then(function () {
