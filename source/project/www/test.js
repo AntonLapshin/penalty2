@@ -40,9 +40,10 @@ require([
         'components/game/vm',
         'components/scores/vm',
         'components/twist/vm',
-        'components/lang/vm'
+        'components/lang/vm',
+        'components/psychic/vm'
     ],
-    function ($, ko, text, social, socialDemo, vk, server, serverDemo, heroku, loader, timer, sound, info, member, top, team, load, intro, choice, instruction, tournament, match, result, game, scores, twist, lang) {
+    function ($, ko, text, social, socialDemo, vk, server, serverDemo, heroku, loader, timer, sound, info, member, top, team, load, intro, choice, instruction, tournament, match, result, game, scores, twist, lang, psychic) {
         ko.components.register('timer', timer);
         ko.components.register('sound', sound);
         ko.components.register('info', info);
@@ -60,6 +61,7 @@ require([
         ko.components.register('scores', scores);
         ko.components.register('twist', twist);
         ko.components.register('lang', lang);
+        ko.components.register('psychic', psychic);
 
         ko.applyBindings({});
 
@@ -72,7 +74,7 @@ require([
 
         $.when.apply($, [social.init(socialInstance), server.init(serverInstance)])
             .then(function () {
-//                timer.viewModel().test();
+                timer.viewModel().test();
 //                sound.viewModel().test();
 //                info.viewModel().test();
 //                member.viewModel().test();
@@ -88,7 +90,8 @@ require([
 //                scores.viewModel().test();
 //                game.viewModel().test();
 //                twist.viewModel().test();
-                lang.viewModel().test();
+//                lang.viewModel().test();
+//                psychic.viewModel().test();
             });
     });
 

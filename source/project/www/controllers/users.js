@@ -1,33 +1,62 @@
 define(['server/server', 'social/social'], function (server, social) {
 
-    function getPlayers(ids, idScoreDic){
+    function getPlayers(ids, idScoreDic) {
         var players = [];
-        return social.getUsers(ids).then(function(users){
+        return social.getUsers(ids).then(function (users) {
             var players = [];
-            for(var i = 0; i < users.length; i++){
+            for (var i = 0; i < users.length; i++) {
                 players.push(newPlayer(users[i], idScoreDic[users[i].id]));
             }
             return players;
         });
     }
 
-    function getIdScoreDic(ids, scores){
+    function mergeUserData(serverUsers, socialUsers){
+        serverUsers.forEach(function (serverUser) {
+            socialUsers.forEach(function (socialUser) {
+                if (socialUser.id == serverUser._id) {
+                    socialUser.isMerged = true;
+                    for (var name in socialUser) {
+                        serverUser[name] = socialUser[name];
+                    }
+                }
+            })
+        });
+
+        socialUsers.forEach(function(socialUser){
+            if (socialUser.isMerged)
+                return;
+
+            serverUsers.push(newPlayer(socialUser))
+        });
+        return serverUsers;
+    }
+
+    function getIds(users){
+        var ids = [];
+        users.forEach(function (user) {
+            ids.push(user.id || user._id);
+        });
+        return ids;
+    }
+
+    function getIdScoreDic(ids, scores) {
         var dic = {};
-        for(var i = 0; i < ids.length; i++){
+        for (var i = 0; i < ids.length; i++) {
             dic[ids[i]] = scores[ids[i]] || 0;
         }
         return dic;
     }
 
-    function parseScores(scores){
+    function parseScores(scores) {
         var dic = {};
-        for(var i = 0; i < scores.length; i++){
+        for (var i = 0; i < scores.length; i++) {
             dic[scores[i]._id] = scores[i];
         }
         return dic;
     }
 
-    function newPlayer(user, score){
+    function newPlayer(user, score) {
         user = user || {
             id: '0',
             img: social.getUnknowImg(),
@@ -38,7 +67,8 @@ define(['server/server', 'social/social'], function (server, social) {
             score: 0,
             goals: 0,
             miss: 0,
-            exp: 0
+            exp: 0,
+            last: 0
         };
 
         return {
@@ -57,32 +87,44 @@ define(['server/server', 'social/social'], function (server, social) {
 
         newPlayer: newPlayer,
 
-        getOneUser: function(id){
-            return social.getUsers(id).then(function(user){
-                return $.Deferred(function(defer){
-                    server.loadUsers(user)
-                        .then(function(users){
-                            defer.resolve(users[0]);
+        getOneUser: function (id) {
+            return social.getUsers([id]).then(function (socialUsers) {
+                return $.Deferred(function (defer) {
+                    server.loadUsers([socialUsers[0].id])
+                        .then(function (serverUsers) {
+                            defer.resolve(mergeUserData(serverUsers, socialUsers)[0]);
                         });
                 });
             })
         },
 
-        getTopUsers: function(){
-            return server.loadTopUsers().then(function (users) {
-                if (users.length == 0){
+        getTopUsers: function () {
+            return server.loadTopUsers().then(function (serverUsers) {
+                if (serverUsers.length == 0) {
                     return [];
                 }
-                return social.getUsers(users);
+
+                return $.Deferred(function (defer) {
+                    social.getUsers(getIds(serverUsers)).then(function (socialUsers) {
+                        serverUsers = mergeUserData(serverUsers, socialUsers);
+                        defer.resolve(serverUsers);
+                    });
+                });
             });
         },
 
-        getFriendsUsers: function(){
-            return social.getFriendsUsers().then(function(users){
-                if (users.length === 0){
+        getFriendsUsers: function () {
+            return social.getFriendsUsers().then(function (socialUsers) {
+                if (socialUsers.length === 0) {
                     return [];
                 }
-                return server.loadUsers(users);
+
+                return $.Deferred(function (defer) {
+                    server.loadUsers(getIds(socialUsers)).then(function (serverUsers) {
+                        serverUsers = mergeUserData(serverUsers, socialUsers);
+                        defer.resolve(serverUsers);
+                    });
+                });
             });
         }
     };

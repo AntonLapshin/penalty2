@@ -13,6 +13,10 @@ define(function(){
             _socialNetwork.invite();
         },
 
+        showOrderBox: function(){
+            return _socialNetwork.showOrderBox();
+        },
+
         getUserUrl: function(id){
             return _socialNetwork.getUserUrl(id);
         },
@@ -36,5 +40,6 @@ define(function(){
         isUserInGroup: function (id) {
             return _socialNetwork.isUserInGroup(id);
         }
+
     }
 });

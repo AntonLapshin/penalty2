@@ -1,4 +1,4 @@
-define(function(){
+define(['jquery'], function($){
 
     var _server,
         _resuests = {
@@ -16,13 +16,20 @@ define(function(){
             return server.init();
         },
 
-        loadUsers: function(users){
-            return _server.loadUsers(users);
+        loadUsers: function(ids){
+            return _server.loadUsers(ids);
         },
 
         loadTopUsers: function(){
-            if (Date.now() - _resuests.loadTopUsers.lastDateTime > _resuests.loadTopUsers.timeout)
-                return _server.loadTopUsers();
+            if (Date.now() - _resuests.loadTopUsers.lastDateTime > _resuests.loadTopUsers.timeout){
+                return $.Deferred(function(defer){
+                    _server.loadTopUsers().then(function(serverUsers){
+                        _resuests.loadTopUsers.lastDateTime = Date.now();
+                        _resuests.loadTopUsers.data = serverUsers;
+                        defer.resolve(serverUsers);
+                    });
+                });
+            }
 
             return $.Deferred(function(defer){
                 defer.resolve(_resuests.loadTopUsers.data);

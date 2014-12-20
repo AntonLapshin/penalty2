@@ -148,7 +148,7 @@ define(['jquery', 'physics', 'engine/points', 'plugins/loader'], function ($, Ph
             _world.clearLayer('ball');
         },
 
-        strike: function (vector) {
+        strike: function (vector, psychicVector) {
             var strikeVector;
 
             if (_world.isAttack) {
@@ -156,7 +156,7 @@ define(['jquery', 'physics', 'engine/points', 'plugins/loader'], function ($, Ph
                 strikeVector = vector.clone().mult(STRENGTH_KOEFF).vadd(vectorNoise);
             }
             else {
-                strikeVector = this.getRandomVector();
+                strikeVector = psychicVector || this.getRandomVector();
             }
             _world.ball.accelerate(strikeVector);
             _world.ball.strikeVector = strikeVector;

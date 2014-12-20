@@ -12,6 +12,8 @@ define([
         return b.score - a.score;
     }
 
+    var _mode;
+
     var _viewModel = {
         isVisible: ko.observable(false),
 
@@ -29,25 +31,33 @@ define([
         },
 
         setVisibleUsers: function (users) {
-            users = [this.myself].concat(users);
+            if (_mode === "friends")
+                users = [this.myself].concat(users);
+
             users.sort(sortRule);
             users.forEach(function (user, index) {
-                user.place = index;
+                user.place = _mode === "top" ? index : undefined;
             });
+
             this.users(users);
 
             var result = [];
             for (var i = this.page() * MAX_VISIBLE_PLAYERS, j = 0; i < this.users().length && j < MAX_VISIBLE_PLAYERS; i++, j++) {
                 result.push(this.users()[i]);
             }
+            for (; i < MAX_VISIBLE_PLAYERS; i++){
+                result.push(UsersController.newPlayer())
+            }
             this.visibleUsers(result);
         },
 
         toAllTop: function () {
+            _mode = "top";
             this.getUsers(UsersController.getTopUsers);
         },
 
         toFriendsTop: function () {
+            _mode = "friends";
             this.getUsers(UsersController.getFriendsUsers);
         },
 
@@ -66,7 +76,7 @@ define([
                 });
             });
 
-            UsersController.getOneUser(1)
+            UsersController.getOneUser(5653333)
                 .then(function (user) {
                     self.show(user);
                 });

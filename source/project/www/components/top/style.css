@@ -11,3 +11,24 @@
 }
 
 .top ul { padding: 0; margin: 0}
+
+.top .switch {
+    margin-top: 10px;
+}
+
+/* ----------------- SWITCH -------------- */
+.top .switch {
+    width: 240px;
+}
+
+.top .switch-label {
+    width: 116px;
+}
+
+.switch-input:checked + .modetop ~ .switch-selection {
+    left: 120px;
+}
+
+.top .switch-selection {
+    width: 116px;
+}

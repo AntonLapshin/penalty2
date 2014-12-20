@@ -2,7 +2,7 @@ define(['ko', 'text!./view.html', 'localization/strings'], function(ko, html, st
 
     var _viewModel = {
         isVisible: ko.observable(false),
-        isMuted: ko.observable(false),
+        lang: ko.observable(window.cfg.lang),
 
         show: function(){
             this.isVisible(true);
@@ -10,11 +10,13 @@ define(['ko', 'text!./view.html', 'localization/strings'], function(ko, html, st
 
         en: function(){
             strings.language = 'en';
+            this.lang('en');
             strings.setLanguage();
         },
 
         ru: function(){
             strings.language = 'ru';
+            this.lang('ru');
             strings.setLanguage();
         },
 

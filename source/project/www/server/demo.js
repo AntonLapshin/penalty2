@@ -2,6 +2,14 @@ define(['jquery', 'plugins/format'], function ($, vk, format) {
 
     var _USERS = [
         {
+            "_id": 5653333,
+            "score": 11000,
+            "exp": 123,
+            "goals": 123,
+            "miss": 32,
+            "last": new Date()
+        },
+        {
             "_id": 253300936,
             "score": 20546,
             "exp": 196,
@@ -81,20 +89,14 @@ define(['jquery', 'plugins/format'], function ($, vk, format) {
             })
         },
 
-        loadUsers: function (users) {
-            if (typeof users !== 'object')
-                users = [
-                    { id: users }
-                ];
-            else if (!users.length)
-                users = [users];
+        loadUsers: function (ids) {
+            var users = [];
 
-            users.forEach(function (user, index) {
-                if (_USERS.length <= index) return;
-                var sourceUser = _USERS[index];
-                for(var name in sourceUser){
-                    user[name] = sourceUser[name];
-                }
+            ids.forEach(function (id) {
+                _USERS.forEach(function(user){
+                    if (id === user._id)
+                        users.push($.extend({}, user));
+                });
             });
 
             return $.Deferred(function (defer) {
@@ -104,7 +106,7 @@ define(['jquery', 'plugins/format'], function ($, vk, format) {
 
         loadTopUsers: function () {
             return $.Deferred(function (defer) {
-                defer.resolve(_USERS);
+                defer.resolve([].concat(_USERS));
             });
         },
 

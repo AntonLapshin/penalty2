@@ -55,7 +55,15 @@ define(function(){
             teamGermany:    ['Германия',                'Germany'],
             teamUSA:        ['США',                     'USA'],
             teamBelgium:    ['Бельгия',                 'Belgium'],
-            teamAlgzir:     ['Алжир',                   'Algzir']
+            teamAlgzir:     ['Алжир',                   'Algzir'],
+
+            psychicText:    ['Помощь экстрасенса. Всего за 1 голос экстрасенс поможет угадать направление удара и прыжка противника в этой серии пенальти.',
+                             'Psichic help. Only for one vote Psichyc can help you to guess direction of attack and goalkeeper throw in that match.'],
+
+            psychicTextEnabled: ['В этом матче Вам помогает экстрасенс', 'In that match the Psychic helps you'],
+
+            txtTimer:       ['До начала турнира',       'Time left'],
+            txtTimerVote:   ['За 1 голос ты можешь начать новый турнир прямо сейчас',       'For 1 vote you can continue game right now']
         }
     }
 });

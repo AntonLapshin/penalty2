@@ -7,8 +7,8 @@ define(['jquery', 'plugins/ajax'], function ($, ajax) {
             })
         },
 
-        loadUsers: function(users){
-            return ajax.callAjax('scores', { ids: users })
+        loadUsers: function(ids){
+            return ajax.callAjax('scores', { ids: ids })
         },
 
         loadTopUsers: function(){

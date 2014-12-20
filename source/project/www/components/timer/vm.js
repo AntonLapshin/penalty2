@@ -1,11 +1,14 @@
-define(['ko', 'text!./view.html', 'jquery'], function(ko, html, $) {
+define(['ko', 'text!./view.html', 'jquery', 'localization/strings', 'social/social'], function(ko, html, $, strings, social) {
 
     var _interval,
-        _seconds;
+        _seconds,
+        _isBought = false;
 
     var _viewModel = {
         isVisible: ko.observable(),
         value: ko.observable(''),
+        txtTimer: strings.txtTimer,
+        txtTimerVote: strings.txtTimerVote,
 
         setValue: function(){
             var min = Math.floor(_seconds / 60);
@@ -19,8 +22,17 @@ define(['ko', 'text!./view.html', 'jquery'], function(ko, html, $) {
             this.show(Date.now());
         },
 
+        click: function(){
+            var self = this;
+            social.showOrderBox().then(function(){
+                self.isVisible(false);
+                _isBought = true;
+            })
+        },
+
         show: function(last){
-            if (window.DEBUG) return;
+            //if (window.DEBUG) return;
+            _isBought = false;
 
             if (_interval)
                 return;
@@ -49,7 +61,7 @@ define(['ko', 'text!./view.html', 'jquery'], function(ko, html, $) {
         },
 
         highlight: function(){
-            if (window.DEBUG) return false;
+            if (/*window.DEBUG || */_isBought) return false;
 
             if (!_seconds)
                 return false;

@@ -23,9 +23,10 @@ define(function () {
                 'components/scores/vm',
                 'components/game/vm',
                 'components/twist/vm',
-                'components/lang/vm'
+                'components/lang/vm',
+                'components/psychic/vm'
             ],
-                function (ko, loader, options, social, timer, sound, info, member, top, team, load, intro, choice, instruction, tournament, match, result, scores, game, twist, lang) {
+                function (ko, loader, options, social, timer, sound, info, member, top, team, load, intro, choice, instruction, tournament, match, result, scores, game, twist, lang, psychic) {
 
                     ko.components.register('timer', timer);
                     ko.components.register('sound', sound);
@@ -44,6 +45,7 @@ define(function () {
                     ko.components.register('game', game);
                     ko.components.register('twist', twist);
                     ko.components.register('lang', lang);
+                    ko.components.register('psychic', psychic);
 
                     ko.applyBindings({});
 
@@ -104,7 +106,6 @@ define(function () {
                                         social.wallPost(place).then(
                                             function () {
                                                 top.viewModel().isVisible(true);
-                                                top.viewModel().sort();
                                                 result.viewModel().show(
                                                     score,
                                                     place,

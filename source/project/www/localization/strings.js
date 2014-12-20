@@ -1,7 +1,7 @@
 define(['ko', 'localization/languages'], function(ko, languages){
 
     var _strings = {
-        language: 'en',
+        language: window.cfg.lang,
         setLanguage: function(){
             for (var name in languages.strings){
                 if (_strings[name]){

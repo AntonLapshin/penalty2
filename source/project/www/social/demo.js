@@ -5,6 +5,8 @@ define(['jquery', 'plugins/format'], function ($, vk, format) {
         APP_URL = 'https://vk.com/app4446829',
         MESSAGE = 'Занятое место на чемпионате мира: {0}. Попробуй свои силы в послематчевых пенальти на чемпионате мира 2014 {1}';
 
+    var _MYSELF = {"id": 5653333, "img": "https://pp.vk.me/c623220/v623220333/c060/4Np4xWzgxlU.jpg", "name": "Anton Lapshin"}
+
     var _USERS = [
         {"id": 253300936, "img": "https://pp.vk.me/c618421/v618421936/12aa1/RTXvKzOd65E.jpg", "name": "Mikha Pogodin"},
         {"id": 229865556, "img": "https://pp.vk.me/c306409/v306409233/3581/UAvmuA-GaBo.jpg", "name": "Denis Shevchenko"},
@@ -43,6 +45,12 @@ define(['jquery', 'plugins/format'], function ($, vk, format) {
             alert('showInviteBox');
         },
 
+        showOrderBox: function () {
+            return $.Deferred(function (defer) {
+                defer.resolve();
+            });
+        },
+
         getUserUrl: function (id) {
             return 'https://vk.com/id' + id;
         },
@@ -58,26 +66,30 @@ define(['jquery', 'plugins/format'], function ($, vk, format) {
             });
         },
 
-        getUsers: function(users){
-            if (typeof users !== 'object')
-                users = [{ id: users }];
-            else if (!users.length)
-                users = [users];
+        getUsers: function (ids) {
+            if(ids.length === 1)
+                return $.Deferred(function (defer) {
+                    defer.resolve([$.extend({}, _MYSELF)]);
+                });
+            var users = [];
 
-            users.forEach(function(user, index){
-                if (_USERS.length <= index) return;
-                user.img = _USERS[index].img;
-                user.name = _USERS[index].name;
+            ids.forEach(function (id) {
+                _USERS.forEach(function (user) {
+                    if (user.id === id)
+                        users.push(user);
+                });
             });
 
-            return $.Deferred(function(defer){
+            return $.Deferred(function (defer) {
                 defer.resolve(users);
             });
         },
 
         getFriendsUsers: function () {
+            var __USERS = [].concat(_USERS);
+            var users = [__USERS[0], __USERS[4], __USERS[6]];
             return $.Deferred(function (defer) {
-                defer.resolve(_USERS);
+                defer.resolve(users);
             });
         },
 

@@ -5,3 +5,20 @@
     top: 5px;
     opacity: 0.5;
 }
+
+/* ----------------- Switch -------------- */
+.lang .switch {
+    width: 120px;
+}
+
+.lang .switch-label {
+    width: 58px;
+}
+
+.switch-input:checked + .ru ~ .switch-selection {
+    left: 60px;
+}
+
+.switch-selection {
+    width: 58px;
+}

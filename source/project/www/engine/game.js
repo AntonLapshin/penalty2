@@ -11,10 +11,11 @@ define([
     'engine/bullet',
     'engine/collisions',
     'plugins/audio',
-    'components/twist/vm'
+    'components/twist/vm',
+    'components/psychic/vm',
 ],
     function (Physics, viewport, background, ball, objects, //camera,
-              Points, arrow, goalkeeper, bullet, collisions, audio, twist) {
+              Points, arrow, goalkeeper, bullet, collisions, audio, twist, psychic) {
 
         var WIDTH = 700,
             HEIGHT = 800;
@@ -22,9 +23,23 @@ define([
         var _defer,
             _world;
 
+        var _psychicVector;
+
         function _setWorldState(state) {
             _world.state = state;
             _defer.notify(state);
+        }
+
+        function PsychicHired(){
+            if (psychic.viewModel().isEnabled() === true) {
+                _psychicVector = ball.getRandomVector();
+
+                arrow.drawPsychicArrow(
+                    _world,
+                    _psychicVector);
+            }
+            else
+                _psychicVector = undefined;
         }
 
         return{
@@ -34,12 +49,16 @@ define([
                 _world.isAttack = isAttack;
                 if (isAttack)
                     twist.viewModel().show();
+
                 Physics.util.ticker.start();
                 audio.play('stadium');
                 //camera.toPoint(Points.PenaltyCamera);
                 ball.toStart();
                 goalkeeper.toStart();
                 _setWorldState('start');
+
+                PsychicHired();
+                psychic.viewModel().onHired = PsychicHired;
             },
 
             stop: function (delay) {
@@ -73,10 +92,17 @@ define([
                                 _setWorldState('strike');
                                 audio.play('strike');
                                 twist.viewModel().hide();
-                                ball.strike(arrow.strikeVector);
+                                ball.strike(
+                                    arrow.strikeVector,
+                                    _psychicVector
+                                );
+
                                 if (world.isAttack)
                                     world.ball.state.angular.vel = -1 * twist.viewModel().twistvalue() / 200;
-                                goalkeeper.jump(arrow.strikeVector, ball.getRandomVector());
+                                goalkeeper.jump(
+                                    arrow.strikeVector,
+                                    _psychicVector || ball.getRandomVector(),
+                                    _psychicVector);
                             });
 
                             world.on('ball:crossbar', function () {

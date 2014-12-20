@@ -161,11 +161,11 @@ define(['jquery', 'physics', 'engine/points', 'plugins/loader'], function ($, Ph
             _world.ball.state.vel.vsub(decreaseVel);
         },
 
-        jump: function(strikeVector, randomVector){
+        jump: function(strikeVector, randomVector, isPsychic){
             var jumpVector,
                 rndNoise;
             if (_world.isAttack){
-                if (_world.round === 0){
+                if (_world.round === 0 || isPsychic){
                     strikeVector = randomVector;
                 }
                 else if (_world.round === 1){

@@ -97,6 +97,29 @@ define(['jquery', 'physics'],
 
         strikeVector: null,
 
+        drawPsychicArrow: function(world, vector){
+            var arrowLayer = world._renderer.layer('arrow');
+
+            var startPosAbs = world.isAttack ? world.goalkeeper.head.state.pos : world.ball.state.pos,
+                endPosAbs;
+
+            if (world.isAttack){
+                endPosAbs = world.ball.state.pos.clone().vadd(vector.clone().normalize().mult(650))
+            }
+            else{
+                endPosAbs = world.ball.state.pos.clone().vadd(vector.clone().normalize().mult(ARROW_LENGTH_MAX))
+            }
+
+            var startPosRel = world.getPosRel(startPosAbs),
+                endPosRel = world.getPosRel(endPosAbs),
+                directionVector = endPosAbs.clone().vsub(startPosAbs),
+                diffVector = directionVector.clone().normalize().mult(ARROW_LENGTH_MIN),
+                reducedEndPosAbs = endPosAbs.clone().vsub(diffVector),
+                reducedEndPosRel = world.getPosRel(reducedEndPosAbs);
+
+            drawLineArrow(arrowLayer.ctx, startPosRel, endPosRel, reducedEndPosRel);
+        },
+
         init: function (world) {
 
             var arrowLayer = world._renderer.addLayer('arrow', undefined, { manual: true, zIndex: 10 }),

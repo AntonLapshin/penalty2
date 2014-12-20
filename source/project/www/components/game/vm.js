@@ -3,8 +3,9 @@ define([
     'text!./view.html',
     'engine/game',
     'components/scores/vm',
+    'components/psychic/vm',
     'localization/strings'
-], function (ko, html, game, scores, strings) {
+], function (ko, html, game, scores, psychic, strings) {
 
     $('*').on('selectstart', function () {
         return false;
@@ -19,6 +20,8 @@ define([
 
         show: function (teamA, teamB, moveTeamAB, playerTeamAB) {
             scores.viewModel().show(teamA, teamB, playerTeamAB, moveTeamAB);
+            psychic.viewModel().show();
+
             var self = this;
 
             function showMessage(text, next) {
@@ -60,9 +63,10 @@ define([
             }
 
             function result(isGoal) {
-                if (window.DEBUG){
+                if (window.cfg.debug){
                     self.isVisible(false);
                     scores.viewModel().isVisible(false);
+                    psychic.viewModel().isVisible(false);
                     _defer.resolve(1, 0);
                     return;
                 }
@@ -75,6 +79,7 @@ define([
 
                 showMessage(text, function () {
                     self.isVisible(false);
+                    psychic.viewModel().isVisible(false);
                     scores.viewModel().isVisible(false);
                     _defer.resolve(scores.viewModel().goalsA(), scores.viewModel().goalsB());
                 });
@@ -91,7 +96,7 @@ define([
             var self = this;
             require(['plugins/options', 'plugins/loader'], function (options, loader) {
                 loader.load(loader.resources.ENGINE).then(function () {
-                    self.show(options.teams[0], options.teams[1], 'A', 'A').
+                    self.show(options.teams[0], options.teams[1], 'B', 'A').
                         then(function (goals1, goals2) {
                             alert(goals1 + ' : ' + goals2);
                         });
