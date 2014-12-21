@@ -7,45 +7,48 @@ define(function () {
                 'plugins/loader',
                 'plugins/options',
                 'social/social',
-                'components/timer/vm',
-                'components/sound/vm',
-                'components/info/vm',
-                'components/member/vm',
-                'components/top/vm',
-                'components/team/vm',
-                'components/load/vm',
-                'components/intro/vm',
-                'components/choice/vm',
-                'components/instruction/vm',
-                'components/tournament/vm',
-                'components/match/vm',
-                'components/result/vm',
-                'components/scores/vm',
-                'components/game/vm',
-                'components/twist/vm',
-                'components/lang/vm',
-                'components/psychic/vm'
+                'plugins/component'
+                //'components/timer/vm',
+                //'components/sound/vm',
+                //'components/info/vm',
+                //'components/member/vm',
+                //'components/top/vm',
+                //'components/team/vm',
+                //'components/load/vm',
+                //'components/intro/vm',
+                //'components/choice/vm',
+                //'components/instruction/vm',
+                //'components/tournament/vm',
+                //'components/match/vm',
+                //'components/result/vm',
+                //'components/scores/vm',
+                //'components/game/vm',
+                //'components/twist/vm',
+                //'components/lang/vm',
+                //'components/psychic/vm'
             ],
-                function (ko, loader, options, social, timer, sound, info, member, top, team, load, intro, choice, instruction, tournament, match, result, scores, game, twist, lang, psychic) {
+                function (ko, loader, options, social, component) {//timer, sound, info, member, top, team, load, intro, choice, instruction, tournament, match, result, scores, game, twist, lang, psychic) {
 
-                    ko.components.register('timer', timer);
-                    ko.components.register('sound', sound);
-                    ko.components.register('info', info);
-                    ko.components.register('member', member);
-                    ko.components.register('top', top);
-                    ko.components.register('team', team);
-                    ko.components.register('load', load);
-                    ko.components.register('intro', intro);
-                    ko.components.register('choice', choice);
-                    ko.components.register('instruction', instruction);
-                    ko.components.register('tournament', tournament);
-                    ko.components.register('match', match);
-                    ko.components.register('result', result);
-                    ko.components.register('scores', scores);
-                    ko.components.register('game', game);
-                    ko.components.register('twist', twist);
-                    ko.components.register('lang', lang);
-                    ko.components.register('psychic', psychic);
+                    //ko.components.register('timer', timer);
+                    //ko.components.register('sound', sound);
+                    //ko.components.register('info', info);
+                    //ko.components.register('member', member);
+                    //ko.components.register('top', top);
+                    //ko.components.register('team', team);
+                    //ko.components.register('load', load);
+                    //ko.components.register('intro', intro);
+                    //ko.components.register('choice', choice);
+                    //ko.components.register('instruction', instruction);
+                    //ko.components.register('tournament', tournament);
+                    //ko.components.register('match', match);
+                    //ko.components.register('result', result);
+                    //ko.components.register('scores', scores);
+                    //ko.components.register('game', game);
+                    //ko.components.register('twist', twist);
+                    //ko.components.register('lang', lang);
+                    //ko.components.register('psychic', psychic);
+
+                    component.load
 
                     ko.applyBindings({});
 

@@ -1,38 +1,34 @@
-define(['ko', 'text!./view.html', 'localization/strings'], function(ko, html, strings) {
+define(['ko', 'text!./view.html', 'plugins/localization', 'plugins/component', 'model/teams'],
+    function (ko, html, strings, component, teams) {
 
     var _defer;
 
     var _viewModel = {
         isVisible: ko.observable(false),
-        items: ko.observableArray([]),
+        items: ko.observableArray(teams),
         title: strings.choiceTitle,
 
-        show: function(items){
-            this.items(items);
+        show: function () {
             this.isVisible(true);
-            return $.Deferred(function(defer){
+            return $.Deferred(function (defer) {
                 _defer = defer;
             });
         },
 
-        ok: function(index){
+        ok: function (index) {
             this.isVisible(false);
             _defer.resolve(index);
         },
 
-        test: function(){
-            var self = this;
-
+        test: function () {
             require(['plugins/loader'], function (loader) {
                 loader.load(loader.resources.GAME).then(function () {
                 });
             });
 
-            require(['plugins/options'], function(options){
-                self.show(options.teams).then(function(index){
-                    alert('Selected team is ' + index);
-                })
-            });
+            this.show().then(function (index) {
+                alert('Selected team is ' + index);
+            })
         }
     };
 
@@ -40,5 +36,5 @@ define(['ko', 'text!./view.html', 'localization/strings'], function(ko, html, st
         return _viewModel;
     }
 
-    return { viewModel: ViewModel, template: html };
+    return { viewModel: ViewModel, template: html, depend: ['team'] };
 });

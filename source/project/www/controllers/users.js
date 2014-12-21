@@ -1,4 +1,4 @@
-define(['server/server', 'social/social'], function (server, social) {
+define(['server/server', 'social/social', 'plugins/localization'], function (server, social, strings) {
 
     function getPlayers(ids, idScoreDic) {
         var players = [];
@@ -60,7 +60,7 @@ define(['server/server', 'social/social'], function (server, social) {
         user = user || {
             id: '0',
             img: social.getUnknowImg(),
-            name: 'Пригласить друга'
+            name: strings.txtInvite//'Пригласить друга'
         };
 
         score = score || {

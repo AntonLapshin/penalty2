@@ -1,4 +1,5 @@
-define(['ko', 'text!./view.html', 'plugins/viewmodel', 'social/social', 'components/info/vm'], function(ko, html, vm, social, info) {
+define(['ko', 'text!./view.html', 'plugins/viewmodel', 'social/social', 'components/info/vm'],
+    function(ko, html, vm, social, info) {
 
     function ViewModel(params){
         this.user = ko.observable();
@@ -40,5 +41,5 @@ define(['ko', 'text!./view.html', 'plugins/viewmodel', 'social/social', 'compone
         if (params && params.user)
             ins.show(params.user);
         return ins;
-    }, template: html };
+    }, template: html, depend: ['info'] };
 });

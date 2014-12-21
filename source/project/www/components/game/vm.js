@@ -4,7 +4,7 @@ define([
     'engine/game',
     'components/scores/vm',
     'components/psychic/vm',
-    'localization/strings'
+    'plugins/localization'
 ], function (ko, html, game, scores, psychic, strings) {
 
     $('*').on('selectstart', function () {
@@ -109,5 +109,5 @@ define([
         return _viewModel;
     }
 
-    return { viewModel: ViewModel, template: html };
+    return { viewModel: ViewModel, template: html, depend: ['scores', 'psychic'] };
 });

@@ -2,9 +2,8 @@ define([
     'ko',
     'text!./view.html',
     'controllers/users',
-    'model/user',
-    'localization/strings'
-], function (ko, html, UsersController, User, strings) {
+    'plugins/localization'
+], function (ko, html, UsersController, strings) {
 
     var MAX_VISIBLE_PLAYERS = 9;
 
@@ -89,5 +88,5 @@ define([
         return _viewModel;
     }
 
-    return { viewModel: ViewModel, template: html };
+    return { viewModel: ViewModel, template: html, depend: ['member'] };
 });

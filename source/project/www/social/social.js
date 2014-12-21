@@ -39,7 +39,10 @@ define(function(){
 
         isUserInGroup: function (id) {
             return _socialNetwork.isUserInGroup(id);
-        }
+        },
 
+        getCommunityHref: function(){
+            return _socialNetwork.getCommunityHref();
+        }
     }
 });

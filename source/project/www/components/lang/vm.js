@@ -1,4 +1,4 @@
-define(['ko', 'text!./view.html', 'localization/strings'], function(ko, html, strings) {
+define(['ko', 'text!./view.html', 'plugins/localization'], function(ko, html, strings) {
 
     var _viewModel = {
         isVisible: ko.observable(false),
@@ -9,15 +9,13 @@ define(['ko', 'text!./view.html', 'localization/strings'], function(ko, html, st
         },
 
         en: function(){
-            strings.language = 'en';
             this.lang('en');
-            strings.setLanguage();
+            strings.setLanguage('en');
         },
 
         ru: function(){
-            strings.language = 'ru';
             this.lang('ru');
-            strings.setLanguage();
+            strings.setLanguage('ru');
         },
 
         test: function(){

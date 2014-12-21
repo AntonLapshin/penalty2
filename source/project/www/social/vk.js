@@ -113,6 +113,10 @@ define(['jquery', 'vk', 'plugins/format'], function ($, vk, format) {
                     defer.resolve(data.response.member === 1);
                 });
             });
+        },
+
+        getCommunityHref: function(){
+            return '//vk.com/club71627954';
         }
     }
 });

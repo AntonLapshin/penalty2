@@ -47,7 +47,7 @@ define(['jquery', 'plugins/format'], function ($, vk, format) {
 
         showOrderBox: function () {
             return $.Deferred(function (defer) {
-                defer.resolve();
+                window.setTimeout(defer.resolve, 500);
             });
         },
 
@@ -62,7 +62,7 @@ define(['jquery', 'plugins/format'], function ($, vk, format) {
         wallPost: function (place) {
             return $.Deferred(function (defer) {
                 alert('show Wall Post');
-                defer.resolve();
+                window.setTimeout(defer.resolve, 500);
             });
         },
 
@@ -99,6 +99,10 @@ define(['jquery', 'plugins/format'], function ($, vk, format) {
                     defer.resolve(data.response.member === 1);
                 });
             });
+        },
+
+        getCommunityHref: function(){
+            return 'http://google.com/';
         }
     }
 });

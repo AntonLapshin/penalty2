@@ -1,4 +1,4 @@
-define(['ko', 'text!./view.html', 'localization/strings'], function (ko, html, strings) {
+define(['ko', 'text!./view.html', 'plugins/localization'], function (ko, html, strings) {
 
     var _step,
         _moveTeamAB,
@@ -99,5 +99,5 @@ define(['ko', 'text!./view.html', 'localization/strings'], function (ko, html, s
         return _viewModel;
     }
 
-    return { viewModel: ViewModel, template: html };
+    return { viewModel: ViewModel, template: html, depend: ['team'] };
 });

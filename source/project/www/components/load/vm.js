@@ -1,4 +1,4 @@
-define(['ko', 'text!./view.html', 'jquery', 'localization/strings'], function(ko, html, $, strings) {
+define(['ko', 'text!./view.html', 'jquery', 'plugins/localization'], function(ko, html, $, strings) {
 
     var _interval,
         _seconds,

@@ -1,4 +1,4 @@
-define(['ko', 'text!./view.html', 'social/social', 'localization/strings'], function(ko, html, social, strings) {
+define(['ko', 'text!./view.html', 'social/social', 'plugins/localization'], function(ko, html, social, strings) {
 
     var _viewModel = {
         isVisible: ko.observable(false),
@@ -11,6 +11,7 @@ define(['ko', 'text!./view.html', 'social/social', 'localization/strings'], func
         txtGoals: strings.goals,
         linkGroup: strings.linkGroup,
         linkInvite: strings.linkInvite,
+        communityHref: social.getCommunityHref(),
 
         show: function(score, place, team, goals){
             this.score(score);

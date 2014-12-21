@@ -7,20 +7,21 @@
     <script src="//cdn.jsdelivr.net/spinjs/1.3.0/spin.min.js"></script>
 </head>
 <body>
-<div id="container">
-    <lang></lang>
-    <timer></timer>
-    <sound></sound>
-    <info></info>
-    <top></top>
-    <load></load>
-    <intro></intro>
-    <choice></choice>
-    <instruction></instruction>
-    <tournament></tournament>
-    <match></match>
-    <game></game>
-    <result></result>
+    <div id="container">
+        <lang></lang>
+        <timer></timer>
+        <sound></sound>
+        <info></info>
+        <top></top>
+        <load></load>
+        <intro></intro>
+        <!--<choice></choice>-->
+        <instruction></instruction>
+        <tournament></tournament>
+        <match></match>
+        <game></game>
+        <result></result>
+    </div>
     <script>
         (function () {
             var opts = {
@@ -45,9 +46,12 @@
 
             var target = document.body,
                 spinner = new Spinner(opts).spin(target);
+
+            window.stopSpinner = function(){
+                spinner.stop();
+            }
         })();
     </script>
     <script src="//cdnjs.cloudflare.com/ajax/libs/require.js/2.1.14/require.js" data-main="main"></script>
-</div>
 </body>
 </html>

@@ -1,4 +1,4 @@
-define(['localization/strings'], function (strings) {
+define(['plugins/localization'], function (strings) {
 
     return [
         { power: 9, player: false, name: strings.teamBrazil, className: 'team-brazil' },

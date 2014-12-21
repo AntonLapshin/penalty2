@@ -1,4 +1,4 @@
-define(['ko', 'text!./view.html', 'localization/strings', 'social/social'], function (ko, html, strings, social) {
+define(['ko', 'text!./view.html', 'plugins/localization', 'social/social'], function (ko, html, strings, social) {
 
     var _viewModel = {
         isVisible: ko.observable(false),

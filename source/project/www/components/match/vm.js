@@ -1,4 +1,4 @@
-define(['ko', 'text!./view.html', 'localization/strings'], function(ko, html, strings) {
+define(['ko', 'text!./view.html', 'plugins/localization', 'model/teams'], function (ko, html, strings, teams) {
 
     function random(min, max) {
         return (Math.random() * (max - min) + min) | 0
@@ -14,13 +14,12 @@ define(['ko', 'text!./view.html', 'localization/strings'], function(ko, html, st
         teamA: ko.observable(-1),
         teamB: ko.observable(-1),
         firstTeam: ko.observable(-1),
-        teams: null,
+        teams: teams,
         firstTurn: strings.firstTurn,
         drawLot: strings.drawLot,
         btnStart: strings.btnStart,
 
-        show: function (teams, teamA, teamB) {
-            this.teams = teams;
+        show: function (teamA, teamB) {
             this.isBallotVisible(true);
             this.isBeginVisible(false);
 
@@ -34,7 +33,7 @@ define(['ko', 'text!./view.html', 'localization/strings'], function(ko, html, st
 
             this.isVisible(true);
 
-            return $.Deferred(function(defer){
+            return $.Deferred(function (defer) {
                 _defer = defer;
             });
         },
@@ -50,7 +49,7 @@ define(['ko', 'text!./view.html', 'localization/strings'], function(ko, html, st
             this.firstTeam(random(0, 2) === 0 ? this.teamA() : this.teamB());
         },
 
-        test: function(){
+        test: function () {
             var self = this;
 
             require(['plugins/loader'], function (loader) {
@@ -58,11 +57,10 @@ define(['ko', 'text!./view.html', 'localization/strings'], function(ko, html, st
                 });
             });
 
-            require(['plugins/options'], function(options){
-                self.show(options.teams, 1, 2).then(function(firstTeam){
-                    alert('First turn team is ' + firstTeam);
-                })
-            });
+            self.show(1, 2).then(function (firstTeam) {
+                alert('First turn team is ' + firstTeam);
+            })
+
         }
     };
 
@@ -70,5 +68,5 @@ define(['ko', 'text!./view.html', 'localization/strings'], function(ko, html, st
         return _viewModel;
     }
 
-    return { viewModel: ViewModel, template: html };
+    return {viewModel: ViewModel, template: html, depend: ['team']};
 });

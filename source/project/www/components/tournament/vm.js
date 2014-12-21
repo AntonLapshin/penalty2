@@ -1,4 +1,4 @@
-define(['ko', 'text!./view.html', 'localization/strings'], function(ko, html, strings) {
+define(['ko', 'text!./view.html', 'plugins/localization',  'model/teams'], function(ko, html, strings, teams) {
 
     var _defer;
 
@@ -16,7 +16,7 @@ define(['ko', 'text!./view.html', 'localization/strings'], function(ko, html, st
             pair,
             i;
 
-        for (i = 0; i < _teams.length; i++) {
+        for (i = 0; i < teams.length; i++) {
             indicies.push(i);
         }
 
@@ -48,23 +48,20 @@ define(['ko', 'text!./view.html', 'localization/strings'], function(ko, html, st
         pair.winner = goalsA > goalsB ? pair.teamA : pair.teamB;
     }
 
-    var _teams,
-        _round,
+    var _round,
         _playerTeamIndex;
 
     var _viewModel = {
         isVisible: ko.observable(false),
         isGoRoundButtonVisible: ko.observable(false),
         rounds: ko.observableArray(),
-        teams: null,
+        teams: teams,
         champion: ko.observable(-1),
         txtGoRound: strings.txtGoRound,
 
-        show: function (teams, playerTeamIndex) {
+        show: function (playerTeamIndex) {
             _round = 0;
-            _teams = teams;
             _playerTeamIndex = playerTeamIndex;
-            this.teams = teams;
 
             this.isVisible(true);
             this.isGoRoundButtonVisible(true);
@@ -95,8 +92,8 @@ define(['ko', 'text!./view.html', 'localization/strings'], function(ko, html, st
                     _defer.notify('match', match);
                 }
                 else {
-                    var tA = _teams[pair.teamA];
-                    var tB = _teams[pair.teamB];
+                    var tA = teams[pair.teamA];
+                    var tB = teams[pair.teamB];
                     var goalsA = calcGoals(tA.power - tB.power);
                     var goalsB = calcGoals(tB.power - tA.power);
                     if (goalsA === goalsB) {
@@ -169,7 +166,7 @@ define(['ko', 'text!./view.html', 'localization/strings'], function(ko, html, st
 
             require(['plugins/options'], function(options){
                 options.init(5);
-                self.show(options.teams, 5).progress(function(type, args){
+                self.show(5).progress(function(type, args){
                     console.log(type + ': ' + JSON.stringify(args));
 
                     if (type === 'match'){
@@ -192,5 +189,5 @@ define(['ko', 'text!./view.html', 'localization/strings'], function(ko, html, st
         return _viewModel;
     }
 
-    return { viewModel: ViewModel, template: html };
+    return { viewModel: ViewModel, template: html, depend: ['team'] };
 });
