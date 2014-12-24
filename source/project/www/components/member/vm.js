@@ -41,5 +41,5 @@ define(['ko', 'text!./view.html', 'plugins/viewmodel', 'social/social', 'compone
         if (params && params.user)
             ins.show(params.user);
         return ins;
-    }, template: html, depend: ['info'] };
+    }, template: html, depend: 'info' };
 });

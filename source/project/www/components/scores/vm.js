@@ -99,5 +99,5 @@ define(['ko', 'text!./view.html', 'plugins/localization'], function (ko, html, s
         return _viewModel;
     }
 
-    return { viewModel: ViewModel, template: html, depend: ['team'] };
+    return { viewModel: ViewModel, template: html, depend: 'team' };
 });

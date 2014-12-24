@@ -43,5 +43,5 @@ define(['ko', 'text!./view.html', 'social/social', 'plugins/localization'], func
         return _viewModel;
     }
 
-    return { viewModel: ViewModel, template: html };
+    return { viewModel: ViewModel, template: html, depend: 'team' };
 });

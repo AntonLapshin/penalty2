@@ -88,5 +88,5 @@ define([
         return _viewModel;
     }
 
-    return { viewModel: ViewModel, template: html, depend: ['member'] };
+    return { viewModel: ViewModel, template: html, depend: 'member' };
 });

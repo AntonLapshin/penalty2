@@ -68,5 +68,5 @@ define(['ko', 'text!./view.html', 'plugins/localization', 'model/teams'], functi
         return _viewModel;
     }
 
-    return {viewModel: ViewModel, template: html, depend: ['team']};
+    return {viewModel: ViewModel, template: html, depend: 'team'};
 });
