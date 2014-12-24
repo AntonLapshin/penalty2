@@ -1,11 +1,11 @@
 window.cfg = {
-    debug: true,
+    debug: false,
     heroku: {
         vk: "https://penaltydb.herokuapp.com/",
         fb: "https://penaltydbfb.herokuapp.com/"
     },
-    server: "demo",
-    social: "demo",
+    server: "heroku",
+    social: "fb",
     language: "en"
 };
 
@@ -51,7 +51,7 @@ require([
                 });
                 var search = window.location.search,
                     testComponentName = search.length > 0 ? search.substring(1) : null;
-                if (testComponentName){
+                if (window.debug === true && testComponentName){
                     require(['plugins/component'], function(component){
                         component.test(testComponentName)
                             .then(window.stopSpinner);
@@ -59,7 +59,7 @@ require([
                 }
                 else{
                     require(['lifecycle'], function(lifecycle){
-                        lifecycle.start();
+                        lifecycle();
                     });
                 }
             });

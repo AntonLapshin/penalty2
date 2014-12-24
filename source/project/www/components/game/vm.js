@@ -109,5 +109,5 @@ define([
         return _viewModel;
     }
 
-    return { viewModel: ViewModel, template: html, depend: ['scores', 'psychic'] };
+    return { viewModel: ViewModel, template: html, depend: ['scores', 'psychic', 'twist'] };
 });
