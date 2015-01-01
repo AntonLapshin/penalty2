@@ -24,7 +24,7 @@ define(['model/teams', 'server/server', 'controllers/users'], function (teams, s
 
         load: function () {
             var self = this;
-            return UsersController.getOneUser(undefined)
+            return UsersController.getMe()
                 .then(function (user) {
                     self.player = user;
                 });

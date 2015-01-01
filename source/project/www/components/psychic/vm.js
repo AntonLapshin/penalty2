@@ -2,6 +2,7 @@ define(['ko', 'text!./view.html', 'plugins/localization', 'social/social'], func
 
     var _viewModel = {
         isVisible: ko.observable(false),
+        isPaymentEnabled: window.cfg.payments,
 
         textVisible: ko.observable(false),
         text: strings.psychicText,

@@ -61,17 +61,23 @@ define(function () {
                                         if (score > options.player.score)
                                             options.player.score = score;
                                         options.save();
-                                        social.wallPost(place).then(
-                                            function () {
-                                                top.viewModel().isVisible(true);
-                                                result.viewModel().show(
-                                                    score,
-                                                    place,
-                                                    options.teams[_playerTeamIndex],
-                                                    options.goals
-                                                );
-                                            }
-                                        );
+
+                                        function resultsHandler(){
+                                            top.viewModel().isVisible(true);
+                                            result.viewModel().show(
+                                                score,
+                                                place,
+                                                options.teams[_playerTeamIndex],
+                                                options.goals
+                                            );
+                                        }
+
+                                        if (window.cfg.publish){
+                                            social.wallPost(place).then(resultsHandler);
+                                        }
+                                        else{
+                                            resultsHandler();
+                                        }
                                         return;
                                     }
                                     // --------------------------------------------------------------------- NEW MATCH

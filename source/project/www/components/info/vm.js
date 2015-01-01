@@ -25,9 +25,9 @@ define(['ko', 'text!./view.html', 'plugins/localization'], function(ko, html, st
         test: function(){
             var self = this;
             require(['controllers/users'], function (UsersController) {
-                UsersController.getOneUser(1)
-                    .then(function(users){
-                        self.show(users);
+                UsersController.getMe()
+                    .then(function(user){
+                        self.show(user);
                     });
             });
         }

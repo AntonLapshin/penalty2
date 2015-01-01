@@ -2,11 +2,6 @@ define(['jquery', 'fb', 'plugins/format'], function ($, fb, format) {
 
     var APP_ID = '381019665399908';
 
-    //var ID_GROUP = '71627954',
-    //    PHOTO = 'photo-71627954_332801553',
-    //    APP_URL = 'https://vk.com/app4446829',
-    //    MESSAGE = 'Занятое место на чемпионате мира: {0}. Попробуй свои силы в послематчевых пенальти на чемпионате мира 2014 {1}';
-
     var PATHS = {
         GET_FRIENDS: '/me/friends?fields=name,picture.width(50).height(50)',
         GET_USERS: '?fields=name,picture.width(50).height(50)&ids={0}',
@@ -26,7 +21,8 @@ define(['jquery', 'fb', 'plugins/format'], function ($, fb, format) {
                 FB.login(function(){
                     defer.resolve();
                 }, {
-                    scope: 'user_friends,publish_actions'
+                    //scope: 'user_friends,publish_actions'
+                    scope: 'user_friends'
                 });
             })
         },
@@ -48,34 +44,12 @@ define(['jquery', 'fb', 'plugins/format'], function ($, fb, format) {
         },
 
         showOrderBox: function () {
-            alert('showOrderBox');
-            //return $.Deferred(function (defer) {
-            //    VK.addCallback('onOrderSuccess', function (order_id) {
-            //        defer.resolve();
-            //    });
-            //    VK.addCallback('onOrderFail', function () {
-            //        defer.reject('fail');
-            //    });
-            //    VK.addCallback('onOrderCancel', function () {
-            //        defer.reject('cancel');
-            //    });
-            //
-            //    VK.callMethod('showOrderBox', {
-            //        type: 'votes',
-            //        votes: 1
-            //    });
-            //});
+            console.log('showOrderBox is not implemented');
         },
 
         wallPost: function (place) {
+            console.log('wallPost is not implemented');
             //FB.api('/me/feed', 'post', {message: 'Hello, world!'});
-            alert('wallPost');
-            defer.resolve(answer);
-            return $.Deferred(function (defer) {
-                VK.api('wall.post', { attachments: PHOTO, message: format(MESSAGE, place, APP_URL)}, function (answer) {
-                    defer.resolve(answer);
-                });
-            });
         },
 
         getMe: function(){
@@ -85,15 +59,12 @@ define(['jquery', 'fb', 'plugins/format'], function ($, fb, format) {
                         defer.resolve([]);
                         return;
                     }
-                    defer.resolve([parseUser(response)]);
+                    defer.resolve(parseUser(response));
                 });
             });
         },
 
         getUsers: function (ids) {
-            if (ids && ids.length === 1)
-                return this.getMe();
-
             return $.Deferred(function (defer) {
 
                 var users = [],

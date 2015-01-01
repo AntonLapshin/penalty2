@@ -1,7 +1,6 @@
 <div class="timer" data-bind="visible: isVisible, click: click">
     <p class="desc" data-bind="text: txtTimer"></p>
     <p class="time" data-bind="text: value"></p>
-    <div class="popup" data-bind="text: txtTimerVote">
-        Устали ждать? Цена 1 голос.
+    <div class="popup" data-bind="visible: isPaymentEnabled, text: txtTimerVote">
     </div>
 </div>

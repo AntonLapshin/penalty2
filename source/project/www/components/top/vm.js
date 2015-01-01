@@ -75,7 +75,7 @@ define([
                 });
             });
 
-            UsersController.getOneUser(5653333)
+            UsersController.getMe()
                 .then(function (user) {
                     self.show(user);
                 });

@@ -6,6 +6,7 @@ define(['ko', 'text!./view.html', 'jquery', 'plugins/localization', 'social/soci
 
     var _viewModel = {
         isVisible: ko.observable(),
+        isPaymentEnabled: window.cfg.payments,
         value: ko.observable(''),
         txtTimer: strings.txtTimer,
         txtTimerVote: strings.txtTimerVote,
@@ -24,6 +25,8 @@ define(['ko', 'text!./view.html', 'jquery', 'plugins/localization', 'social/soci
 
         click: function(){
             var self = this;
+            if (!this.isPaymentEnabled)
+                return;
             social.showOrderBox().then(function(){
                 self.isVisible(false);
                 _isBought = true;
@@ -31,7 +34,6 @@ define(['ko', 'text!./view.html', 'jquery', 'plugins/localization', 'social/soci
         },
 
         show: function(last){
-            //if (window.DEBUG) return;
             _isBought = false;
 
             if (_interval)
@@ -61,7 +63,7 @@ define(['ko', 'text!./view.html', 'jquery', 'plugins/localization', 'social/soci
         },
 
         highlight: function(){
-            if (/*window.DEBUG || */_isBought) return false;
+            if (_isBought) return false;
 
             if (!_seconds)
                 return false;

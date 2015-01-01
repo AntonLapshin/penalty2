@@ -1,5 +1,7 @@
 window.cfg = {
     debug: false,
+    payments: false,
+    publish: false,
     heroku: {
         vk: "https://penaltydb.herokuapp.com/",
         fb: "https://penaltydbfb.herokuapp.com/"
@@ -24,7 +26,7 @@ requirejs.config({
         text: 'vendor/text',
         lodash: '//cdnjs.cloudflare.com/ajax/libs/lodash.js/2.4.1/lodash.min',
         vk: '//vk.com/js/api/xd_connection',
-        'fb': '//connect.facebook.net/en_US/all'
+        fb: '//connect.facebook.net/en_US/all'
     }
 });
 

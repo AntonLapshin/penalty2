@@ -20,7 +20,7 @@ define(['ko', 'text!./view.html', 'plugins/viewmodel', 'social/social', 'compone
         this.test = function(){
             var self = this;
             require(['controllers/users'], function (UsersController) {
-                UsersController.getOneUser(1)
+                UsersController.getMe()
                     .then(function(user){
                         self.show(user);
                     });

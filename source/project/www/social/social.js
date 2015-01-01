@@ -29,6 +29,10 @@ define(function(){
             return _socialNetwork.wallPost(place);
         },
 
+        getMe: function () {
+            return _socialNetwork.getMe();
+        },
+
         getUsers: function (ids) {
             return _socialNetwork.getUsers(ids);
         },

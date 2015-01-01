@@ -87,12 +87,12 @@ define(['server/server', 'social/social', 'plugins/localization'], function (ser
 
         newPlayer: newPlayer,
 
-        getOneUser: function (id) {
-            return social.getUsers([id]).then(function (socialUsers) {
+        getMe: function () {
+            return social.getMe().then(function (socialUser) {
                 return $.Deferred(function (defer) {
-                    server.loadUsers([socialUsers[0].id])
+                    server.loadUsers([socialUser.id])
                         .then(function (serverUsers) {
-                            defer.resolve(mergeUserData(serverUsers, socialUsers)[0]);
+                            defer.resolve(mergeUserData(serverUsers, [socialUser])[0]);
                         });
                 });
             })
