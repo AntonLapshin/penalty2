@@ -1,9 +1,10 @@
-define(['ko', 'text!./view.html', 'plugins/localization'], function(ko, html, strings) {
+define([
+    'ko',
+    'text!./view.html',
+    'plugins/localization'
+], function (ko, html, strings) {
 
-    var _interval,
-        _seconds,
-        _defer,
-        _debug = false;
+    var _defer;
 
     var _viewModel = {
         isVisible: ko.observable(false),
@@ -14,33 +15,33 @@ define(['ko', 'text!./view.html', 'plugins/localization'], function(ko, html, st
         btnStart: strings.btnStart,
         btnInstruction: strings.btnInstruction,
 
-        show: function(){
+        show: function () {
             this.isVisible(true);
-            return $.Deferred(function(defer){
+            return $.Deferred(function (defer) {
                 _defer = defer;
             })
         },
 
-        start: function(){
+        start: function () {
             var self = this;
-            setTimeout(function(){
+            setTimeout(function () {
                 _defer.notify('start');
             }, 300);
         },
-        rules: function(){
+        rules: function () {
             var self = this;
-            setTimeout(function(){
+            setTimeout(function () {
                 _defer.notify('rules');
             }, 300);
         },
 
-        test: function(){
+        test: function () {
             require(['plugins/loader'], function (loader) {
                 loader.load(loader.resources.GAME).then(function () {
                 });
             });
 
-            this.show().progress(function(result){
+            this.show().progress(function (result) {
                 alert(result);
             });
         }
@@ -50,5 +51,8 @@ define(['ko', 'text!./view.html', 'plugins/localization'], function(ko, html, st
         return _viewModel;
     }
 
-    return { viewModel: ViewModel, template: html };
+    var component = {viewModel: ViewModel, template: html};
+    if (!ko.components.isRegistered('intro'))
+        ko.components.register('intro', component);
+    return component;
 });

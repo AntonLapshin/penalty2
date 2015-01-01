@@ -1,4 +1,8 @@
-define(['ko', 'text!./view.html', 'plugins/localization'], function(ko, html, strings) {
+define([
+    'ko',
+    'text!./view.html',
+    'plugins/localization'
+], function(ko, html, strings) {
 
     var _viewModel = {
         isVisible: ko.observable(false),
@@ -37,5 +41,8 @@ define(['ko', 'text!./view.html', 'plugins/localization'], function(ko, html, st
         return _viewModel;
     }
 
-    return { viewModel: ViewModel, template: html };
+    var component = {viewModel: ViewModel, template: html};
+    if (!ko.components.isRegistered('info'))
+        ko.components.register('info', component);
+    return component;
 });

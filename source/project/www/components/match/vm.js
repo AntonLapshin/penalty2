@@ -1,4 +1,10 @@
-define(['ko', 'text!./view.html', 'plugins/localization', 'model/teams'], function (ko, html, strings, teams) {
+define([
+    'ko',
+    'text!./view.html',
+    'c/team/vm',
+    'plugins/localization',
+    'model/teams'
+], function (ko, html, team, strings, teams) {
 
     function random(min, max) {
         return (Math.random() * (max - min) + min) | 0
@@ -68,5 +74,8 @@ define(['ko', 'text!./view.html', 'plugins/localization', 'model/teams'], functi
         return _viewModel;
     }
 
-    return {viewModel: ViewModel, template: html, depend: 'team'};
+    var component = {viewModel: ViewModel, template: html};
+    if (!ko.components.isRegistered('match'))
+        ko.components.register('match', component);
+    return component;
 });

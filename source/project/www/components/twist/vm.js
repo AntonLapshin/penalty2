@@ -1,4 +1,8 @@
-define(['ko', 'text!./view.html', 'plugins/localization'], function (ko, html, strings) {
+define([
+    'ko',
+    'text!./view.html',
+    'plugins/localization'
+], function (ko, html, strings) {
 
     var _viewModel = {
         isVisible: ko.observable(false),
@@ -9,7 +13,7 @@ define(['ko', 'text!./view.html', 'plugins/localization'], function (ko, html, s
             this.isVisible(true);
         },
 
-        hide: function(){
+        hide: function () {
             this.isVisible(false);
         },
 
@@ -22,5 +26,8 @@ define(['ko', 'text!./view.html', 'plugins/localization'], function (ko, html, s
         return _viewModel;
     }
 
-    return { viewModel: ViewModel, template: html };
+    var component = {viewModel: ViewModel, template: html};
+    if (!ko.components.isRegistered('twist'))
+        ko.components.register('twist', component);
+    return component;
 });

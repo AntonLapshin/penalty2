@@ -1,9 +1,10 @@
 define([
     'ko',
     'text!./view.html',
+    'c/member/vm',
     'controllers/users',
     'plugins/localization'
-], function (ko, html, UsersController, strings) {
+], function (ko, html, member, UsersController, strings) {
 
     var MAX_VISIBLE_PLAYERS = 9;
 
@@ -44,7 +45,7 @@ define([
             for (var i = this.page() * MAX_VISIBLE_PLAYERS, j = 0; i < this.users().length && j < MAX_VISIBLE_PLAYERS; i++, j++) {
                 result.push(this.users()[i]);
             }
-            for (; i < MAX_VISIBLE_PLAYERS; i++){
+            for (; i < MAX_VISIBLE_PLAYERS; i++) {
                 result.push(UsersController.newPlayer())
             }
             this.visibleUsers(result);
@@ -88,5 +89,8 @@ define([
         return _viewModel;
     }
 
-    return { viewModel: ViewModel, template: html, depend: 'member' };
+    var component = {viewModel: ViewModel, template: html};
+    if (!ko.components.isRegistered('top'))
+        ko.components.register('top', component);
+    return component;
 });

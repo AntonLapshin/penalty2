@@ -1,6 +1,6 @@
 define(['jquery'], function ($) {
 
-    var SERVER_NAME = window.cfg.heroku[window.cfg.social],
+    var SERVER_NAME = window.cfg.server,
         URL_END = "callback=?",
         TIMEOUT = 50000;
 

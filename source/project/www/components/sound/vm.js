@@ -1,4 +1,8 @@
-define(['ko', 'text!./view.html', 'plugins/audio'], function(ko, html, audio) {
+define([
+    'ko',
+    'text!./view.html',
+    'plugins/audio'
+], function (ko, html, audio) {
 
     var _interval,
         _seconds,
@@ -8,30 +12,30 @@ define(['ko', 'text!./view.html', 'plugins/audio'], function(ko, html, audio) {
         isVisible: ko.observable(false),
         isMuted: ko.observable(false),
 
-        show: function(){
+        show: function () {
             this.isVisible(true);
         },
 
-        unmute: function(){
+        unmute: function () {
             audio.unmute();
             this.isMuted(false);
         },
 
-        mute: function(){
+        mute: function () {
             audio.mute();
             this.isMuted(true);
         },
 
-        press: function(){
+        press: function () {
             if (audio.isMuted())
                 this.unmute();
             else
                 this.mute();
         },
 
-        test: function(){
+        test: function () {
             var self = this;
-            require(['plugins/loader'], function(loader){
+            require(['plugins/loader'], function (loader) {
                 loader.load(loader.resources.ENGINE)
                     .then(function () {
                         self.show();
@@ -45,5 +49,8 @@ define(['ko', 'text!./view.html', 'plugins/audio'], function(ko, html, audio) {
         return _viewModel;
     }
 
-    return { viewModel: ViewModel, template: html };
+    var component = {viewModel: ViewModel, template: html};
+    if (!ko.components.isRegistered('sound'))
+        ko.components.register('sound', component);
+    return component;
 });

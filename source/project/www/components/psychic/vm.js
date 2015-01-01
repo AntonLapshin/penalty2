@@ -1,4 +1,9 @@
-define(['ko', 'text!./view.html', 'plugins/localization', 'social/social'], function (ko, html, strings, social) {
+define([
+    'ko',
+    'text!./view.html',
+    'plugins/localization',
+    'social/social'
+], function (ko, html, strings, social) {
 
     var _viewModel = {
         isVisible: ko.observable(false),
@@ -15,12 +20,12 @@ define(['ko', 'text!./view.html', 'plugins/localization', 'social/social'], func
             this.isEnabled(false);
         },
 
-        buy: function(){
+        buy: function () {
             if (this.isEnabled() === true)
                 return;
 
             var self = this;
-            social.showOrderBox().then(function(){
+            social.showOrderBox().then(function () {
                 self.isEnabled(true);
                 if (self.onHired)
                     self.onHired();
@@ -29,11 +34,11 @@ define(['ko', 'text!./view.html', 'plugins/localization', 'social/social'], func
 
         onHired: null,
 
-        hover: function(){
+        hover: function () {
             this.textVisible(true);
         },
 
-        out: function(){
+        out: function () {
             this.textVisible(false);
         },
 
@@ -46,5 +51,8 @@ define(['ko', 'text!./view.html', 'plugins/localization', 'social/social'], func
         return _viewModel;
     }
 
-    return { viewModel: ViewModel, template: html };
+    var component = {viewModel: ViewModel, template: html};
+    if (!ko.components.isRegistered('psychic'))
+        ko.components.register('psychic', component);
+    return component;
 });

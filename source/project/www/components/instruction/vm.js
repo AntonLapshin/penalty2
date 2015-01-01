@@ -1,4 +1,8 @@
-define(['ko', 'text!./view.html', 'plugins/localization'], function(ko, html, strings) {
+define([
+    'ko',
+    'text!./view.html',
+    'plugins/localization'
+], function (ko, html, strings) {
 
     var _defer;
 
@@ -10,29 +14,29 @@ define(['ko', 'text!./view.html', 'plugins/localization'], function(ko, html, st
         rulePenalty: strings.rulePenalty,
         prev: strings.prev,
 
-        show: function(){
+        show: function () {
             this.isVisible(true);
-            return $.Deferred(function(defer){
+            return $.Deferred(function (defer) {
                 _defer = defer;
             });
         },
 
-        back: function(){
+        back: function () {
             var self = this;
-            setTimeout(function(){
+            setTimeout(function () {
                 self.isVisible(false);
                 _defer.resolve();
             }, 300);
         },
 
-        test: function(){
+        test: function () {
 
             require(['plugins/loader'], function (loader) {
                 loader.load(loader.resources.GAME).then(function () {
                 });
             });
 
-            this.show().then(function(){
+            this.show().then(function () {
                 console.log('back');
             });
         }
@@ -42,5 +46,8 @@ define(['ko', 'text!./view.html', 'plugins/localization'], function(ko, html, st
         return _viewModel;
     }
 
-    return { viewModel: ViewModel, template: html };
+    var component = {viewModel: ViewModel, template: html};
+    if (!ko.components.isRegistered('instruction'))
+        ko.components.register('instruction', component);
+    return component;
 });

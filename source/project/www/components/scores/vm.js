@@ -1,4 +1,9 @@
-define(['ko', 'text!./view.html', 'plugins/localization'], function (ko, html, strings) {
+define([
+    'ko',
+    'text!./view.html',
+    'c/team/vm',
+    'plugins/localization'
+], function (ko, html, team, strings) {
 
     var _step,
         _moveTeamAB,
@@ -17,15 +22,15 @@ define(['ko', 'text!./view.html', 'plugins/localization'], function (ko, html, s
         goalsB: ko.observable(0),
         rounds: ko.observableArray([]),
 
-        getRound: function(){
+        getRound: function () {
             return this.rounds.length;
         },
 
-        getMoveTeamAB: function(){
+        getMoveTeamAB: function () {
             return _moveTeamAB;
         },
 
-        newRound: function(){
+        newRound: function () {
             _round = {
                 A: ko.observable('none'),
                 B: ko.observable('none')
@@ -56,7 +61,7 @@ define(['ko', 'text!./view.html', 'plugins/localization'], function (ko, html, s
 
         next: function (isGoal) {
             _round[_moveTeamAB](isGoal ? 'goal' : 'miss');
-            if (_step % 2 === 0){
+            if (_step % 2 === 0) {
                 this.newRound();
             }
             if (isGoal) {
@@ -86,7 +91,7 @@ define(['ko', 'text!./view.html', 'plugins/localization'], function (ko, html, s
                 $('.score').css('background-color', 'grey');
                 var interval = setInterval(function () {
                     var result = self.next(random(0, 2) === 1);
-                    if (result){
+                    if (result) {
                         clearInterval(interval);
                         alert('result');
                     }
@@ -99,5 +104,8 @@ define(['ko', 'text!./view.html', 'plugins/localization'], function (ko, html, s
         return _viewModel;
     }
 
-    return { viewModel: ViewModel, template: html, depend: 'team' };
+    var component = {viewModel: ViewModel, template: html};
+    if (!ko.components.isRegistered('scores'))
+        ko.components.register('scores', component);
+    return component;
 });

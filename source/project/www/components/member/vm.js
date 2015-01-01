@@ -1,13 +1,18 @@
-define(['ko', 'text!./view.html', 'plugins/viewmodel', 'social/social', 'components/info/vm'],
-    function(ko, html, vm, social, info) {
+define([
+    'ko',
+    'text!./view.html',
+    'c/info/vm',
+    'plugins/viewmodel',
+    'social/social'
+], function (ko, html, info, vm, social) {
 
-    function ViewModel(params){
+    function ViewModel(params) {
         this.user = ko.observable();
-        this.show = function(user){
+        this.show = function (user) {
             this.user(user);
             this.isVisible(true);
         };
-        this.click = function(){
+        this.click = function () {
             if (this.user().id == 0) // may be "0"
             {
                 social.invite();
@@ -17,29 +22,34 @@ define(['ko', 'text!./view.html', 'plugins/viewmodel', 'social/social', 'compone
             var win = window.open(url, '_blank');
             win.focus();
         };
-        this.test = function(){
+        this.test = function () {
             var self = this;
             require(['controllers/users'], function (UsersController) {
                 UsersController.getMe()
-                    .then(function(user){
+                    .then(function (user) {
                         self.show(user);
                     });
             });
         };
 
-        this.hover = function(item){
+        this.hover = function (item) {
             info.viewModel().show(item.user());
         };
 
-        this.out = function(){
+        this.out = function () {
             info.viewModel().hide();
         };
     }
 
-    return { viewModel: function (params) {
-        var ins = vm.getViewModel(params, 'member', ViewModel);
-        if (params && params.user)
-            ins.show(params.user);
-        return ins;
-    }, template: html, depend: 'info' };
+    var component = {
+        viewModel: function (params) {
+            var ins = vm.getViewModel(params, 'member', ViewModel);
+            if (params && params.user)
+                ins.show(params.user);
+            return ins;
+        }, template: html
+    };
+    if (!ko.components.isRegistered('member'))
+        ko.components.register('member', component);
+    return component;
 });

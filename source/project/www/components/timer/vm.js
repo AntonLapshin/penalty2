@@ -1,4 +1,10 @@
-define(['ko', 'text!./view.html', 'jquery', 'plugins/localization', 'social/social'], function(ko, html, $, strings, social) {
+define([
+    'ko',
+    'text!./view.html',
+    'jquery',
+    'plugins/localization',
+    'social/social'
+], function (ko, html, $, strings, social) {
 
     var _interval,
         _seconds,
@@ -11,7 +17,7 @@ define(['ko', 'text!./view.html', 'jquery', 'plugins/localization', 'social/soci
         txtTimer: strings.txtTimer,
         txtTimerVote: strings.txtTimerVote,
 
-        setValue: function(){
+        setValue: function () {
             var min = Math.floor(_seconds / 60);
             var sec = Math.floor(_seconds % 60);
             if (sec < 10)
@@ -19,21 +25,21 @@ define(['ko', 'text!./view.html', 'jquery', 'plugins/localization', 'social/soci
             this.value(min + ':' + sec);
         },
 
-        test: function(){
+        test: function () {
             this.show(Date.now());
         },
 
-        click: function(){
+        click: function () {
             var self = this;
             if (!this.isPaymentEnabled)
                 return;
-            social.showOrderBox().then(function(){
+            social.showOrderBox().then(function () {
                 self.isVisible(false);
                 _isBought = true;
             })
         },
 
-        show: function(last){
+        show: function (last) {
             _isBought = false;
 
             if (_interval)
@@ -50,10 +56,10 @@ define(['ko', 'text!./view.html', 'jquery', 'plugins/localization', 'social/soci
 
             this.setValue();
             var self = this;
-            _interval = setInterval(function(){
+            _interval = setInterval(function () {
                 _seconds--;
                 self.setValue();
-                if (_seconds === 0){
+                if (_seconds === 0) {
                     self.isVisible(false);
                     clearInterval(_interval);
                 }
@@ -62,16 +68,16 @@ define(['ko', 'text!./view.html', 'jquery', 'plugins/localization', 'social/soci
             this.isVisible(true);
         },
 
-        highlight: function(){
+        highlight: function () {
             if (_isBought) return false;
 
             if (!_seconds)
                 return false;
 
             $('.timer')
-                .animate({ opacity: 1 }, 200)
-                .animate({ color: 'red' }, 100)
-                .animate({ opacity: 0.3 }, 500);
+                .animate({opacity: 1}, 200)
+                .animate({color: 'red'}, 100)
+                .animate({opacity: 0.3}, 500);
 
             return true;
         }
@@ -81,5 +87,8 @@ define(['ko', 'text!./view.html', 'jquery', 'plugins/localization', 'social/soci
         return _viewModel;
     }
 
-    return { viewModel: ViewModel, template: html };
+    var component = {viewModel: ViewModel, template: html};
+    if (!ko.components.isRegistered('timer'))
+        ko.components.register('timer', component);
+    return component;
 });

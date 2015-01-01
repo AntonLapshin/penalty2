@@ -66,11 +66,13 @@ define(['jquery', 'plugins/format'], function ($, vk, format) {
             });
         },
 
+        getMe: function(){
+            return $.Deferred(function (defer) {
+                defer.resolve(_MYSELF);
+            });
+        },
+
         getUsers: function (ids) {
-            if(ids.length === 1)
-                return $.Deferred(function (defer) {
-                    defer.resolve([$.extend({}, _MYSELF)]);
-                });
             var users = [];
 
             ids.forEach(function (id) {

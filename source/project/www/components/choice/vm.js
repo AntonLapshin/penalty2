@@ -1,5 +1,10 @@
-define(['ko', 'text!./view.html', 'plugins/localization', 'plugins/component', 'model/teams'],
-    function (ko, html, strings, component, teams) {
+define([
+    'ko',
+    'text!./view.html',
+    'c/team/vm',
+    'plugins/localization',
+    'model/teams'
+], function (ko, html, team, strings, teams) {
 
     var _defer;
 
@@ -36,5 +41,8 @@ define(['ko', 'text!./view.html', 'plugins/localization', 'plugins/component', '
         return _viewModel;
     }
 
-    return { viewModel: ViewModel, template: html, depend: 'team' };
+    var component = {viewModel: ViewModel, template: html};
+    if (!ko.components.isRegistered('choice'))
+        ko.components.register('choice', component);
+    return component;
 });

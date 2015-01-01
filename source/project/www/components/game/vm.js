@@ -1,11 +1,12 @@
 define([
     'ko',
     'text!./view.html',
+    'c/scores/vm',
+    'c/psychic/vm',
+    'c/twist/vm',
     'engine/game',
-    'components/scores/vm',
-    'components/psychic/vm',
     'plugins/localization'
-], function (ko, html, game, scores, psychic, strings) {
+], function (ko, html, scores, psychic, twist, game, strings) {
 
     $('*').on('selectstart', function () {
         return false;
@@ -109,5 +110,8 @@ define([
         return _viewModel;
     }
 
-    return { viewModel: ViewModel, template: html, depend: ['scores', 'psychic', 'twist'] };
+    var component = {viewModel: ViewModel, template: html};
+    if (!ko.components.isRegistered('game'))
+        ko.components.register('game', component);
+    return component;
 });

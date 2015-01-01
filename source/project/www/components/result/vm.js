@@ -1,4 +1,10 @@
-define(['ko', 'text!./view.html', 'social/social', 'plugins/localization'], function(ko, html, social, strings) {
+define([
+    'ko',
+    'text!./view.html',
+    'c/team/vm',
+    'social/social',
+    'plugins/localization'
+], function (ko, html, team, social, strings) {
 
     var _viewModel = {
         isVisible: ko.observable(false),
@@ -13,7 +19,7 @@ define(['ko', 'text!./view.html', 'social/social', 'plugins/localization'], func
         linkInvite: strings.linkInvite,
         communityHref: social.getCommunityHref(),
 
-        show: function(score, place, team, goals){
+        show: function (score, place, team, goals) {
             this.score(score);
             this.place(place);
             this.team(team);
@@ -21,11 +27,11 @@ define(['ko', 'text!./view.html', 'social/social', 'plugins/localization'], func
             this.isVisible(true);
         },
 
-        invite: function(){
+        invite: function () {
             social.invite();
         },
 
-        test: function(){
+        test: function () {
             var self = this;
 
             require(['plugins/loader'], function (loader) {
@@ -33,7 +39,7 @@ define(['ko', 'text!./view.html', 'social/social', 'plugins/localization'], func
                 });
             });
 
-            require(['plugins/options'], function(options){
+            require(['plugins/options'], function (options) {
                 self.show(1000, 2, options.teams[2], 12);
             });
         }
@@ -43,5 +49,8 @@ define(['ko', 'text!./view.html', 'social/social', 'plugins/localization'], func
         return _viewModel;
     }
 
-    return { viewModel: ViewModel, template: html, depend: 'team' };
+    var component = {viewModel: ViewModel, template: html};
+    if (!ko.components.isRegistered('result'))
+        ko.components.register('result', component);
+    return component;
 });

@@ -1,24 +1,28 @@
-define(['ko', 'text!./view.html', 'plugins/localization'], function(ko, html, strings) {
+define([
+    'ko',
+    'text!./view.html',
+    'plugins/localization'
+], function (ko, html, strings) {
 
     var _viewModel = {
         isVisible: ko.observable(false),
         lang: ko.observable(window.cfg.lang),
 
-        show: function(){
+        show: function () {
             this.isVisible(true);
         },
 
-        en: function(){
+        en: function () {
             this.lang('en');
             strings.setLanguage('en');
         },
 
-        ru: function(){
+        ru: function () {
             this.lang('ru');
             strings.setLanguage('ru');
         },
 
-        test: function(){
+        test: function () {
             this.show();
         }
     };
@@ -27,5 +31,8 @@ define(['ko', 'text!./view.html', 'plugins/localization'], function(ko, html, st
         return _viewModel;
     }
 
-    return { viewModel: ViewModel, template: html };
+    var component = {viewModel: ViewModel, template: html};
+    if (!ko.components.isRegistered('lang'))
+        ko.components.register('lang', component);
+    return component;
 });

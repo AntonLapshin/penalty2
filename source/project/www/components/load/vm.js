@@ -1,4 +1,9 @@
-define(['ko', 'text!./view.html', 'jquery', 'plugins/localization'], function(ko, html, $, strings) {
+define([
+    'ko',
+    'text!./view.html',
+    'jquery',
+    'plugins/localization'
+], function (ko, html, $, strings) {
 
     var _interval,
         _seconds,
@@ -11,35 +16,36 @@ define(['ko', 'text!./view.html', 'jquery', 'plugins/localization'], function(ko
         percent: ko.observable(0),
         buttonName: strings.btnStart,
 
-        show: function(){
+        show: function () {
             this.percent(0);
             this.isVisible(true);
             this.isLoaded(false);
             var self = this;
-            return $.Deferred(function(defer){
+            return $.Deferred(function (defer) {
                 _defer = defer;
             });
         },
 
-        onPercentChanged: function(percent){
+        onPercentChanged: function (percent) {
             this.percent(percent);
             if (percent === 100)
                 this.isLoaded(true);
         },
 
-        start: function(){
+        start: function () {
             this.isVisible(false);
             _defer.resolve();
         },
 
-        test: function(){
-            this.show().then(function(){
+        test: function () {
+            this.show().then(function () {
                 console.log('Finish');
             });
 
             var p = 0;
             var self = this;
-            function go(){
+
+            function go() {
                 self.onPercentChanged(p);
                 if (p < 100)
                     window.setTimeout(go, 10);
@@ -54,5 +60,8 @@ define(['ko', 'text!./view.html', 'jquery', 'plugins/localization'], function(ko
         return _viewModel;
     }
 
-    return { viewModel: ViewModel, template: html };
+    var component = {viewModel: ViewModel, template: html};
+    if (!ko.components.isRegistered('load'))
+        ko.components.register('load', component);
+    return component;
 });

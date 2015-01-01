@@ -1,4 +1,10 @@
-define(['ko', 'text!./view.html', 'plugins/localization',  'model/teams'], function(ko, html, strings, teams) {
+define([
+    'ko',
+    'text!./view.html',
+    'c/team/vm',
+    'plugins/localization',
+    'model/teams'
+], function (ko, html, team, strings, teams) {
 
     var _defer;
 
@@ -27,7 +33,7 @@ define(['ko', 'text!./view.html', 'plugins/localization',  'model/teams'], funct
             indexB = random(0, indicies.length);
             teamB = indicies[indexB];
             indicies.splice(indexB, 1);
-            pair = { teamA: teamA, teamB: teamB, score: ko.observable('-:-') };
+            pair = {teamA: teamA, teamB: teamB, score: ko.observable('-:-')};
             pairs8.push(pair);
         }
 
@@ -67,7 +73,7 @@ define(['ko', 'text!./view.html', 'plugins/localization',  'model/teams'], funct
             this.isGoRoundButtonVisible(true);
             this.rounds.push(getTeamPairs());
 
-            return $.Deferred(function(defer){
+            return $.Deferred(function (defer) {
                 _defer = defer;
             });
         },
@@ -107,7 +113,7 @@ define(['ko', 'text!./view.html', 'plugins/localization',  'model/teams'], funct
             }
         },
 
-        matchEnded: function(match){
+        matchEnded: function (match) {
             this.isVisible(true);
             setWinner(match.pair, match.goalsA, match.goalsB);
             this.setNewTeamPairs();
@@ -147,7 +153,7 @@ define(['ko', 'text!./view.html', 'plugins/localization',  'model/teams'], funct
             }
 
             for (var i = 0; i < pairs.length; i = i + 2) {
-                var pair = { teamA: pairs[i].winner, teamB: pairs[i + 1].winner, score: ko.observable('-:-') };
+                var pair = {teamA: pairs[i].winner, teamB: pairs[i + 1].winner, score: ko.observable('-:-')};
                 newPairs.push(pair);
             }
 
@@ -156,7 +162,7 @@ define(['ko', 'text!./view.html', 'plugins/localization',  'model/teams'], funct
             _round++;
         },
 
-        test: function(){
+        test: function () {
             var self = this;
 
             require(['plugins/loader'], function (loader) {
@@ -164,20 +170,20 @@ define(['ko', 'text!./view.html', 'plugins/localization',  'model/teams'], funct
                 });
             });
 
-            require(['plugins/options'], function(options){
+            require(['plugins/options'], function (options) {
                 options.init(5);
-                self.show(5).progress(function(type, args){
+                self.show(5).progress(function (type, args) {
                     console.log(type + ': ' + JSON.stringify(args));
 
-                    if (type === 'match'){
+                    if (type === 'match') {
                         args.goals1 = 5;
                         args.goals2 = 2;
                         self.isVisible(true);
-                        setTimeout(function(){
+                        setTimeout(function () {
                             self.matchEnded(args);
                         });
                     }
-                    else if (type === 'end'){
+                    else if (type === 'end') {
                         alert('Your place is ' + args);
                     }
                 })
@@ -189,5 +195,8 @@ define(['ko', 'text!./view.html', 'plugins/localization',  'model/teams'], funct
         return _viewModel;
     }
 
-    return { viewModel: ViewModel, template: html, depend: 'team' };
+    var component = {viewModel: ViewModel, template: html};
+    if (!ko.components.isRegistered('tournament'))
+        ko.components.register('tournament', component);
+    return component;
 });
