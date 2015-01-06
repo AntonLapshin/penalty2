@@ -11,10 +11,9 @@ define([
     'engine/bullet',
     'engine/collisions',
     'plugins/audio',
-    'components/twist/vm',
-    'components/psychic/vm',
-],
-    function (Physics, viewport, background, ball, objects, //camera,
+    'c/twist/vm',
+    'c/psychic/vm'
+], function (Physics, viewport, background, ball, objects, //camera,
               Points, arrow, goalkeeper, bullet, collisions, audio, twist, psychic) {
 
         var WIDTH = 700,

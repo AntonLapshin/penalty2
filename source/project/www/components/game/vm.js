@@ -97,7 +97,7 @@ define([
             var self = this;
             require(['plugins/options', 'plugins/loader'], function (options, loader) {
                 loader.load(loader.resources.ENGINE).then(function () {
-                    self.show(options.teams[0], options.teams[1], 'B', 'A').
+                    self.show(options.teams[0], options.teams[1], 'A', 'A').
                         then(function (goals1, goals2) {
                             alert(goals1 + ' : ' + goals2);
                         });
