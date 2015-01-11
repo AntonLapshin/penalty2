@@ -66,6 +66,26 @@ define(['jquery', 'vk', 'plugins/format'], function ($, vk, format) {
             });
         },
 
+        getMe: function(){
+            var self = this;
+            return $.Deferred(function(defer){
+                VK.api('users.get', { user_ids: undefined, fields: 'photo_50', name_case: 'Nom' }, function(data){
+                    if (!data || data.error)
+                        defer.resolve();
+                    var users = [];
+
+                    if (!data.response) {
+                        defer.resolve();
+                        return;
+                    }
+                    data.response.forEach(function (userData) {
+                        users.push(parseUser(userData));
+                    });
+                    defer.resolve(users[0]);
+                });
+            });
+        },
+
         getUsers: function (ids) {
             return $.Deferred(function (defer) {
 
@@ -73,14 +93,12 @@ define(['jquery', 'vk', 'plugins/format'], function ($, vk, format) {
                     ids = ids[0];
 
                 function handler(data) {
-                    if (!data || data.error)
-                        defer.resolve([]);
-                    var users = [];
-
-                    if (!data.response) {
+                    if (!data || data.error || !data.response){
                         defer.resolve([]);
                         return;
                     }
+
+                    var users = [];
                     data.response.forEach(function (userData) {
                         users.push(parseUser(userData));
                     });

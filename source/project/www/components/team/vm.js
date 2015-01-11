@@ -9,11 +9,15 @@ define([
         this.position = ko.observable('left');
 
         this.show = function (params) {
+            this.set(params);
+            this.isVisible(true);
+        };
+
+        this.set = function(params){
             if (params && params.team){
                 this.team(typeof params.team === 'function' ? params.team() : params.team);
             }
             this.position(params && params.position ? params.position : 'left');
-            this.isVisible(true);
         };
 
         this.test = function () {

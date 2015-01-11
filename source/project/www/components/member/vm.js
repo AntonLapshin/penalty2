@@ -9,9 +9,12 @@ define([
     function ViewModel() {
         this.user = ko.observable();
         this.show = function (params) {
-            if (params && params.user)
-            this.user(params.user);
+            this.set(params);
             this.isVisible(true);
+        };
+        this.set = function(params){
+            if (params && params.user)
+                this.user(params.user);
         };
         this.click = function () {
             if (this.user().id == 0) // may be "0"

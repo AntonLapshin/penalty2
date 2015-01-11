@@ -22,8 +22,11 @@ define(['ko'], function (ko) {
 
     function getViewModel(params, viewName, viewModel){
         var name = viewName + '+' + (params ? (typeof params.name === 'function' ? params.name() : params.name) || 'default' : 'default');
-        if (_viewModels[name])
+        if (_viewModels[name]){
+            if (params && typeof viewModel === 'function')
+                _viewModels[name].set(params);
             return _viewModels[name];
+        }
 
         return new ViewModel(name, viewModel, params);
     }

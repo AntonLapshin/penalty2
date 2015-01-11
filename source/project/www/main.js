@@ -1,9 +1,9 @@
 window.cfg = {
-    debug: true,
+    debug: false,
     payments: true,
-    publish: false,
-    server: "https://penaltydbfb.herokuapp.com/",
-    language: "en"
+    publish: true,
+    server: "https://penaltydb.herokuapp.com/",
+    language: "ru"
 };
 
 requirejs.config({
@@ -13,13 +13,13 @@ requirejs.config({
         }
     },
     paths: {
+        tween: 'lib/tween',
+        text: 'lib/text',
         physics: '//cdn.jsdelivr.net/physicsjs/0.6.0/physicsjs.full.min',
-        tween: 'vendor/tween',
         howler: '//cdnjs.cloudflare.com/ajax/libs/howler/1.1.17/howler.min',
         jquery: '//cdnjs.cloudflare.com/ajax/libs/jquery/2.1.1/jquery.min',
         //ko: '//cdnjs.cloudflare.com/ajax/libs/knockout/3.2.0/knockout-debug',
         ko: '//cdnjs.cloudflare.com/ajax/libs/knockout/3.2.0/knockout-min',
-        text: 'vendor/text',
         lodash: '//cdnjs.cloudflare.com/ajax/libs/lodash.js/2.4.1/lodash.min',
         vk: '//vk.com/js/api/xd_connection',
         fb: '//connect.facebook.net/en_US/all',
@@ -32,9 +32,9 @@ require([
     'jquery',
     'text',
     'social/social',
-    'social/demo',
+    'social/vk',
     'server/server',
-    'server/demo'
+    'server/heroku'
 ], function (ko,
              $,
              text,

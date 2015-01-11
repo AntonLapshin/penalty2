@@ -6,7 +6,7 @@ define([
 ], function (ko, html, component, strings) {
 
     var _viewModel = {
-        lang: ko.observable(window.cfg.lang),
+        lang: ko.observable(window.cfg.language),
 
         show: function () {
             this.isVisible(true);

@@ -60,7 +60,7 @@ define(['server/server', 'social/social', 'plugins/localization'], function (ser
         user = user || {
             id: '0',
             img: social.getUnknowImg(),
-            name: strings.txtInvite//'Пригласить друга'
+            name: strings.txtInvite
         };
 
         score = score || {
