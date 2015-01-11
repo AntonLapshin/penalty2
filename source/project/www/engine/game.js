@@ -30,7 +30,7 @@ define([
         }
 
         function PsychicHired(){
-            if (psychic.viewModel().isEnabled() === true) {
+            if (psychic.isEnabled() === true) {
                 _psychicVector = ball.getRandomVector();
 
                 arrow.drawPsychicArrow(
@@ -47,7 +47,7 @@ define([
                 _world.round = round;
                 _world.isAttack = isAttack;
                 if (isAttack)
-                    twist.viewModel().show();
+                    twist.show();
 
                 Physics.util.ticker.start();
                 audio.play('stadium');
@@ -57,7 +57,7 @@ define([
                 _setWorldState('start');
 
                 PsychicHired();
-                psychic.viewModel().onHired = PsychicHired;
+                psychic.onHired = PsychicHired;
             },
 
             stop: function (delay) {
@@ -90,14 +90,14 @@ define([
                             world.on('arrow:ready', function () {
                                 _setWorldState('strike');
                                 audio.play('strike');
-                                twist.viewModel().hide();
+                                twist.hide();
                                 ball.strike(
                                     arrow.strikeVector,
                                     _psychicVector
                                 );
 
                                 if (world.isAttack)
-                                    world.ball.state.angular.vel = -1 * twist.viewModel().twistvalue() / 200;
+                                    world.ball.state.angular.vel = -1 * twist.twistvalue() / 200;
                                 goalkeeper.jump(
                                     arrow.strikeVector,
                                     _psychicVector || ball.getRandomVector(),

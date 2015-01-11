@@ -1,11 +1,11 @@
 define([
     'ko',
     'text!./view.html',
+    'plugins/component',
     'plugins/localization'
-], function (ko, html, strings) {
+], function (ko, html, component, strings) {
 
     var _viewModel = {
-        isVisible: ko.observable(false),
         twistvalue: ko.observable(0),
         txtTwistBall: strings.txtTwistBall,
 
@@ -22,12 +22,5 @@ define([
         }
     };
 
-    function ViewModel() {
-        return _viewModel;
-    }
-
-    var component = {viewModel: ViewModel, template: html};
-    if (!ko.components.isRegistered('twist'))
-        ko.components.register('twist', component);
-    return component;
+    return component.add(_viewModel, html, 'twist');
 });

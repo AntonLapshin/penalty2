@@ -1,10 +1,11 @@
 define([
     'ko',
     'text!./view.html',
+    'plugins/component',
     'c/team/vm',
     'plugins/localization',
     'model/teams'
-], function (ko, html, team, strings, teams) {
+], function (ko, html, component, team, strings, teams) {
 
     function random(min, max) {
         return (Math.random() * (max - min) + min) | 0
@@ -13,7 +14,6 @@ define([
     var _defer;
 
     var _viewModel = {
-        isVisible: ko.observable(false),
         isBallotVisible: ko.observable(true),
         isBeginVisible: ko.observable(false),
 
@@ -70,12 +70,5 @@ define([
         }
     };
 
-    function ViewModel() {
-        return _viewModel;
-    }
-
-    var component = {viewModel: ViewModel, template: html};
-    if (!ko.components.isRegistered('match'))
-        ko.components.register('match', component);
-    return component;
+    return component.add(_viewModel, html, 'match');
 });

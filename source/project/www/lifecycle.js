@@ -38,42 +38,42 @@ define([
             return options.load();
         })
         .then(function () {
-            lang.viewModel().show();
-            info.viewModel().init(options.player);
-            timer.viewModel().show(options.player.last);
-            sound.viewModel().show();
-            top.viewModel().show(options.player);
-            return intro.viewModel().show();
+            lang.show();
+            info.init(options.player);
+            timer.show(options.player.last);
+            sound.show();
+            top.show(options.player);
+            return intro.show();
         })
         .progress(function (type) {
             if (type === 'rules') {
-                info.viewModel().isVisible(false);
-                intro.viewModel().isVisible(false);
-                instruction.viewModel().show()
+                info.isVisible(false);
+                intro.isVisible(false);
+                instruction.show()
                     .then(function () {
-                        intro.viewModel().isVisible(true);
+                        intro.isVisible(true);
                     });
                 return;
             }
 
-            if (timer.viewModel().highlight())
+            if (timer.highlight())
                 return;
 
-            intro.viewModel().isVisible(false);
+            intro.isVisible(false);
             options.save();
-            info.viewModel().isVisible(false);
-            top.viewModel().isVisible(false);
+            info.isVisible(false);
+            top.isVisible(false);
 
             var _playerTeamIndex,
                 _firstTeamIndex,
                 _firstTeamAB,
                 _playerTeamAB;
 
-            choice.viewModel().show()
+            choice.show()
                 .then(function (playerTeamIndex) {
                     _playerTeamIndex = playerTeamIndex;
                     options.init(playerTeamIndex);
-                    return tournament.viewModel().show(playerTeamIndex);
+                    return tournament.show(playerTeamIndex);
                 })
                 .progress(function (type, args) {
                     if (type === 'end') {
@@ -85,8 +85,8 @@ define([
                         options.save();
 
                         function resultsHandler() {
-                            top.viewModel().isVisible(true);
-                            result.viewModel().show(
+                            top.isVisible(true);
+                            result.show(
                                 score,
                                 place,
                                 options.teams[_playerTeamIndex],
@@ -103,21 +103,21 @@ define([
                         return;
                     }
                     // --------------------------------------------------------------------- NEW MATCH
-                    match.viewModel().show(args.pair.teamA, args.pair.teamB)
+                    match.show(args.pair.teamA, args.pair.teamB)
                         .then(function (firstTeamIndex) {
                             _firstTeamIndex = firstTeamIndex;
                             return $.when.apply($, [
                                 loader.load(loader.resources.ENGINE, function (percent) {
-                                    load.viewModel().onPercentChanged(percent);
+                                    load.onPercentChanged(percent);
                                 }),
-                                load.viewModel().show('Начать игру')
+                                load.show('Начать игру')
                             ]);
                         })
                         .then(function () {
                             _firstTeamAB = _firstTeamIndex === args.pair.teamA ? 'A' : 'B';
                             _playerTeamAB = _playerTeamIndex === args.pair.teamA ? 'A' : 'B';
 
-                            return game.viewModel().show(
+                            return game.show(
                                 options.teams[args.pair.teamA],
                                 options.teams[args.pair.teamB],
                                 _firstTeamAB,
@@ -131,7 +131,7 @@ define([
                                 options.goals += goalsA;
                                 options.miss += goalsB;
                             }
-                            tournament.viewModel().matchEnded(args)
+                            tournament.matchEnded(args)
                         });
                 });
         });

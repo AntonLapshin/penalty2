@@ -1,6 +1,6 @@
 window.cfg = {
-    debug: false,
-    payments: false,
+    debug: true,
+    payments: true,
     publish: false,
     server: "https://penaltydbfb.herokuapp.com/",
     language: "en"
@@ -32,9 +32,9 @@ require([
     'jquery',
     'text',
     'social/social',
-    'social/fb',
+    'social/demo',
     'server/server',
-    'server/heroku'
+    'server/demo'
 ], function (ko,
              $,
              text,
@@ -53,7 +53,7 @@ require([
                 require(['c/' + testComponentName + '/vm'], function (component) {
                     window.stopSpinner();
                     ko.applyBindings({});
-                    component.viewModel().test();
+                    component.test();
                 });
             }
             else {

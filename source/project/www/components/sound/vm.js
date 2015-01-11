@@ -1,15 +1,11 @@
 define([
     'ko',
     'text!./view.html',
+    'plugins/component',
     'plugins/audio'
-], function (ko, html, audio) {
-
-    var _interval,
-        _seconds,
-        _debug = false;
+], function (ko, html, component, audio) {
 
     var _viewModel = {
-        isVisible: ko.observable(false),
         isMuted: ko.observable(false),
 
         show: function () {
@@ -45,12 +41,5 @@ define([
         }
     };
 
-    function ViewModel(params) {
-        return _viewModel;
-    }
-
-    var component = {viewModel: ViewModel, template: html};
-    if (!ko.components.isRegistered('sound'))
-        ko.components.register('sound', component);
-    return component;
+    return component.add(_viewModel, html, 'sound');
 });

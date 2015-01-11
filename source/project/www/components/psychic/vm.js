@@ -1,12 +1,12 @@
 define([
     'ko',
     'text!./view.html',
+    'plugins/component',
     'plugins/localization',
     'social/social'
-], function (ko, html, strings, social) {
+], function (ko, html, component, strings, social) {
 
     var _viewModel = {
-        isVisible: ko.observable(false),
         isPaymentEnabled: window.cfg.payments,
 
         textVisible: ko.observable(false),
@@ -47,12 +47,5 @@ define([
         }
     };
 
-    function ViewModel() {
-        return _viewModel;
-    }
-
-    var component = {viewModel: ViewModel, template: html};
-    if (!ko.components.isRegistered('psychic'))
-        ko.components.register('psychic', component);
-    return component;
+    return component.add(_viewModel, html, 'psychic');
 });

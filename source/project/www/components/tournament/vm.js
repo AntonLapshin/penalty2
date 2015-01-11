@@ -1,10 +1,11 @@
 define([
     'ko',
     'text!./view.html',
+    'plugins/component',
     'c/team/vm',
     'plugins/localization',
     'model/teams'
-], function (ko, html, team, strings, teams) {
+], function (ko, html, component, team, strings, teams) {
 
     var _defer;
 
@@ -58,7 +59,6 @@ define([
         _playerTeamIndex;
 
     var _viewModel = {
-        isVisible: ko.observable(false),
         isGoRoundButtonVisible: ko.observable(false),
         rounds: ko.observableArray(),
         teams: teams,
@@ -191,12 +191,5 @@ define([
         }
     };
 
-    function ViewModel() {
-        return _viewModel;
-    }
-
-    var component = {viewModel: ViewModel, template: html};
-    if (!ko.components.isRegistered('tournament'))
-        ko.components.register('tournament', component);
-    return component;
+    return component.add(_viewModel, html, 'tournament');
 });

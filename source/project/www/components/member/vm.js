@@ -1,15 +1,16 @@
 define([
     'ko',
     'text!./view.html',
+    'plugins/component',
     'c/info/vm',
-    'plugins/viewmodel',
     'social/social'
-], function (ko, html, info, vm, social) {
+], function (ko, html, component, info, social) {
 
-    function ViewModel(params) {
+    function ViewModel() {
         this.user = ko.observable();
-        this.show = function (user) {
-            this.user(user);
+        this.show = function (params) {
+            if (params && params.user)
+            this.user(params.user);
             this.isVisible(true);
         };
         this.click = function () {
@@ -27,29 +28,19 @@ define([
             require(['controllers/users'], function (UsersController) {
                 UsersController.getMe()
                     .then(function (user) {
-                        self.show(user);
+                        self.show({ user: user });
                     });
             });
         };
 
         this.hover = function (item) {
-            info.viewModel().show(item.user());
+            info.show(item.user());
         };
 
         this.out = function () {
-            info.viewModel().hide();
+            info.hide();
         };
     }
 
-    var component = {
-        viewModel: function (params) {
-            var ins = vm.getViewModel(params, 'member', ViewModel);
-            if (params && params.user)
-                ins.show(params.user);
-            return ins;
-        }, template: html
-    };
-    if (!ko.components.isRegistered('member'))
-        ko.components.register('member', component);
-    return component;
+    return component.add(ViewModel, html, 'member');
 });

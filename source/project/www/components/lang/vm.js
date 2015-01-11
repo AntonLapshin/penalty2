@@ -1,11 +1,11 @@
 define([
     'ko',
     'text!./view.html',
+    'plugins/component',
     'plugins/localization'
-], function (ko, html, strings) {
+], function (ko, html, component, strings) {
 
     var _viewModel = {
-        isVisible: ko.observable(false),
         lang: ko.observable(window.cfg.lang),
 
         show: function () {
@@ -27,12 +27,5 @@ define([
         }
     };
 
-    function ViewModel(params) {
-        return _viewModel;
-    }
-
-    var component = {viewModel: ViewModel, template: html};
-    if (!ko.components.isRegistered('lang'))
-        ko.components.register('lang', component);
-    return component;
+    return component.add(_viewModel, html, 'lang');
 });

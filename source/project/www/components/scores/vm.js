@@ -1,9 +1,10 @@
 define([
     'ko',
     'text!./view.html',
+    'plugins/component',
     'c/team/vm',
     'plugins/localization'
-], function (ko, html, team, strings) {
+], function (ko, html, component, team, strings) {
 
     var _step,
         _moveTeamAB,
@@ -15,7 +16,6 @@ define([
     }
 
     var _viewModel = {
-        isVisible: ko.observable(false),
         teamA: ko.observable(null),
         teamB: ko.observable(null),
         goalsA: ko.observable(0),
@@ -100,12 +100,5 @@ define([
         }
     };
 
-    function ViewModel() {
-        return _viewModel;
-    }
-
-    var component = {viewModel: ViewModel, template: html};
-    if (!ko.components.isRegistered('scores'))
-        ko.components.register('scores', component);
-    return component;
+    return component.add(_viewModel, html, 'scores');
 });

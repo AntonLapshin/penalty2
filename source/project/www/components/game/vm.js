@@ -1,12 +1,13 @@
 define([
     'ko',
     'text!./view.html',
+    'plugins/component',
     'c/scores/vm',
     'c/psychic/vm',
     'c/twist/vm',
     'engine/game',
     'plugins/localization'
-], function (ko, html, scores, psychic, twist, game, strings) {
+], function (ko, html, component, scores, psychic, twist, game, strings) {
 
     $('*').on('selectstart', function () {
         return false;
@@ -15,13 +16,12 @@ define([
     var _defer;
 
     var _viewModel = {
-        isVisible: ko.observable(false),
         isVisibleMeta: ko.observable(false),
         text: ko.observable(''),
 
         show: function (teamA, teamB, moveTeamAB, playerTeamAB) {
-            scores.viewModel().show(teamA, teamB, playerTeamAB, moveTeamAB);
-            psychic.viewModel().show();
+            scores.show(teamA, teamB, playerTeamAB, moveTeamAB);
+            psychic.show();
 
             var self = this;
 
@@ -39,11 +39,11 @@ define([
                 switch (state) {
                     case 'loaded':
                         self.isVisible(true);
-                        game.start(scores.viewModel().getRound(), playerTeamAB === scores.viewModel().getMoveTeamAB());
+                        game.start(scores.getRound(), playerTeamAB === scores.getMoveTeamAB());
                         break;
                     case 'start':
                         self.isVisible(true);
-                        showMessage(playerTeamAB === scores.viewModel().getMoveTeamAB() ? strings.turnPlayer() : strings.turnComputer());
+                        showMessage(playerTeamAB === scores.getMoveTeamAB() ? strings.turnPlayer() : strings.turnComputer());
                         break;
                     case 'goal':
                         game.stop(1500);
@@ -66,23 +66,23 @@ define([
             function result(isGoal) {
                 if (window.cfg.debug){
                     self.isVisible(false);
-                    scores.viewModel().isVisible(false);
-                    psychic.viewModel().isVisible(false);
+                    scores.isVisible(false);
+                    psychic.isVisible(false);
                     _defer.resolve(1, 0);
                     return;
                 }
-                var text = scores.viewModel().next(isGoal);
+                var text = scores.next(isGoal);
 
                 if (!text){
-                    game.start(scores.viewModel().getRound(), playerTeamAB === scores.viewModel().getMoveTeamAB());
+                    game.start(scores.getRound(), playerTeamAB === scores.getMoveTeamAB());
                     return;
                 }
 
                 showMessage(text, function () {
                     self.isVisible(false);
-                    psychic.viewModel().isVisible(false);
-                    scores.viewModel().isVisible(false);
-                    _defer.resolve(scores.viewModel().goalsA(), scores.viewModel().goalsB());
+                    psychic.isVisible(false);
+                    scores.isVisible(false);
+                    _defer.resolve(scores.goalsA(), scores.goalsB());
                 });
             }
 
@@ -106,12 +106,5 @@ define([
         }
     };
 
-    function ViewModel() {
-        return _viewModel;
-    }
-
-    var component = {viewModel: ViewModel, template: html};
-    if (!ko.components.isRegistered('game'))
-        ko.components.register('game', component);
-    return component;
+    return component.add(_viewModel, html, 'game');
 });

@@ -1,11 +1,11 @@
 define([
     'ko',
     'text!./view.html',
+    'plugins/component',
     'plugins/localization'
-], function(ko, html, strings) {
+], function(ko, html, component, strings) {
 
     var _viewModel = {
-        isVisible: ko.observable(false),
         user: ko.observable(null),
         scores: strings.scores,
         goals: strings.goals,
@@ -37,12 +37,5 @@ define([
         }
     };
 
-    function ViewModel() {
-        return _viewModel;
-    }
-
-    var component = {viewModel: ViewModel, template: html};
-    if (!ko.components.isRegistered('info'))
-        ko.components.register('info', component);
-    return component;
+    return component.add(_viewModel, html, 'info');
 });

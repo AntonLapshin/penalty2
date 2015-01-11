@@ -1,17 +1,14 @@
 define([
     'ko',
     'text!./view.html',
+    'plugins/component',
     'jquery',
     'plugins/localization'
-], function (ko, html, $, strings) {
+], function (ko, html, component, $, strings) {
 
-    var _interval,
-        _seconds,
-        _defer,
-        _debug = false;
+    var _defer;
 
     var _viewModel = {
-        isVisible: ko.observable(false),
         isLoaded: ko.observable(false),
         percent: ko.observable(0),
         buttonName: strings.btnStart,
@@ -56,12 +53,5 @@ define([
         }
     };
 
-    function ViewModel(params) {
-        return _viewModel;
-    }
-
-    var component = {viewModel: ViewModel, template: html};
-    if (!ko.components.isRegistered('load'))
-        ko.components.register('load', component);
-    return component;
+    return component.add(_viewModel, html, 'load');
 });

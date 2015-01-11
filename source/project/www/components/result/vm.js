@@ -1,13 +1,13 @@
 define([
     'ko',
     'text!./view.html',
+    'plugins/component',
     'c/team/vm',
     'social/social',
     'plugins/localization'
-], function (ko, html, team, social, strings) {
+], function (ko, html, component, team, social, strings) {
 
     var _viewModel = {
-        isVisible: ko.observable(false),
         place: ko.observable(),
         goals: ko.observable(),
         team: ko.observable(null),
@@ -45,12 +45,5 @@ define([
         }
     };
 
-    function ViewModel() {
-        return _viewModel;
-    }
-
-    var component = {viewModel: ViewModel, template: html};
-    if (!ko.components.isRegistered('result'))
-        ko.components.register('result', component);
-    return component;
+    return component.add(_viewModel, html, 'result');
 });

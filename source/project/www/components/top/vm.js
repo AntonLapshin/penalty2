@@ -1,10 +1,11 @@
 define([
     'ko',
     'text!./view.html',
+    'plugins/component',
     'c/member/vm',
     'controllers/users',
     'plugins/localization'
-], function (ko, html, member, UsersController, strings) {
+], function (ko, html, component, member, UsersController, strings) {
 
     var MAX_VISIBLE_PLAYERS = 9;
 
@@ -83,14 +84,5 @@ define([
         }
     };
 
-    var _self = _viewModel;
-
-    function ViewModel() {
-        return _viewModel;
-    }
-
-    var component = {viewModel: ViewModel, template: html};
-    if (!ko.components.isRegistered('top'))
-        ko.components.register('top', component);
-    return component;
+    return component.add(_viewModel, html, 'top');
 });

@@ -1,17 +1,17 @@
 define([
     'ko',
     'text!./view.html',
+    'plugins/component',
     'jquery',
     'plugins/localization',
     'social/social'
-], function (ko, html, $, strings, social) {
+], function (ko, html, component, $, strings, social) {
 
     var _interval,
         _seconds,
         _isBought = false;
 
     var _viewModel = {
-        isVisible: ko.observable(),
         isPaymentEnabled: window.cfg.payments,
         value: ko.observable(''),
         txtTimer: strings.txtTimer,
@@ -83,12 +83,5 @@ define([
         }
     };
 
-    function ViewModel(params) {
-        return _viewModel;
-    }
-
-    var component = {viewModel: ViewModel, template: html};
-    if (!ko.components.isRegistered('timer'))
-        ko.components.register('timer', component);
-    return component;
+    return component.add(_viewModel, html, 'timer');
 });
