@@ -14,7 +14,8 @@ define([
     'c/tournament/vm',
     'c/match/vm',
     'c/load/vm',
-    'c/game/vm'
+    'c/game/vm',
+    'c/result/vm'
 ], function (ko,
              loader,
              options,
@@ -30,7 +31,8 @@ define([
              tournament,
              match,
              load,
-             game) {
+             game,
+             result) {
 
     ko.applyBindings({});
     loader.load(loader.resources.GAME)
