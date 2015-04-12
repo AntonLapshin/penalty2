@@ -1,4 +1,4 @@
-# penalty2
+# Penalty Game
 The second version of Penalty game
 
 jquery
